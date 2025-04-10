@@ -1,9 +1,6 @@
 'use client';
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Menu, Home, Clipboard, FileText, Calendar, Bell, Layers, Globe, Book, Users, LogOut } from "lucide-react";
-import { Popconfirm, message } from "antd";
-import { destroyCookie } from "nookies";
 import SidebarItem from "@/components/admin/SidebarItem";
 import Dashboard from "@/components/admin/Dashboard";
 import PropertyListing from "@/components/admin/PropertyListing";
@@ -14,20 +11,6 @@ import ChatUI from "@/components/admin/ChatUI";
 export default function AdminDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeItem, setActiveItem] = useState<string>("Dashboard");
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   const { token } = parseCookies();
-  //   if (!token) {
-  //     router.push("/");
-  //   }
-  // }, [router]);
-
-  const handleLogout = () => {
-    destroyCookie(null, "token");
-    message.success("Logged out successfully!");
-    router.push("/");
-  };
 
   const renderContent = () => {
     switch (activeItem) {
@@ -47,7 +30,7 @@ export default function AdminDashboard() {
   return (
     <div className="flex h-screen bg-gray-100">
       <div
-        className={`bg-gray-900 text-white transition-all duration-300 ease-in-out 
+        className={`bg-primary text-white transition-all duration-300 ease-in-out 
           ${isSidebarOpen ? "w-64" : "w-16"} flex flex-col`}
       >
         <button
@@ -98,17 +81,6 @@ export default function AdminDashboard() {
       <div className="flex-1 flex flex-col">
         <header className="bg-white text-black shadow p-4 flex justify-between items-center">
           <h1 className="text-xl font-semibold">Welcome to dashboard 👋</h1>
-
-          <Popconfirm
-            title="Are you sure you want to logout?"
-            onConfirm={handleLogout}
-            okText="Yes"
-            cancelText="No"
-          >
-            <button className="text-gray-600 hover:text-red-600 flex items-center space-x-2">
-              <LogOut size={20} />
-            </button>
-          </Popconfirm>
         </header>
 
         <main className="p-3 flex-1">{renderContent()}</main>

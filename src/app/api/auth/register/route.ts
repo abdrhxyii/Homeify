@@ -36,7 +36,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ 
       message: "User created successfully", 
-      user: newUser, 
+      user: { 
+        id: newUser._id, 
+        email: newUser.email, 
+        name: newUser.name, 
+        role: newUser.role 
+      }, 
       token 
     }, { status: 201 });
 

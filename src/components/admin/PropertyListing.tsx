@@ -1,10 +1,13 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button, Popconfirm, Modal, Form, Input, InputNumber, Select, Upload } from 'antd';
 import { DeleteOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import AddPropertyModal from '../AddPropertyModal';
+import { useAuthStore } from '@/store/useAuthStore';
+import axios from 'axios';
+import { showSuccessNotification, showErrorNotification } from '@/lib/notificationUtil';
 
-// Type for Property Data
 interface PropertyData {
   key: number;
   title: string;
@@ -47,7 +50,12 @@ const listingTypes = ['sale', 'rental', 'other'];
 
 const PropertyListing: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { currentLoggedInUserId } = useAuthStore();
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    console.log(currentLoggedInUserId, "currentLoggedInUserId");
+  }, []);
 
   // Open modal
   const showModal = () => {
@@ -58,11 +66,46 @@ const PropertyListing: React.FC = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
   // Handle form submission
-  const handleFormSubmit = (values: any) => {
+  const handleFormSubmit = async (values: {
+    title: string;
+    description: string;
+    price: number;
+    location: string;
+    propertyType: string;
+    bedrooms: number;
+    bathrooms: number;
+    area: number;
+    amenities: string[];
+    images: string[];
+    listingType: string;
+  }) => {
     console.log("New Property:", values);
-    setIsModalOpen(false);
+    const { title, description, price, location, propertyType, bedrooms, bathrooms, area, amenities, images, listingType } = values;
+
+    try {
+      const response = await axios.post('/api/property', {
+        title,
+        description,
+        price,
+        location,
+        propertyType,
+        bedrooms,
+        bathrooms,
+        area,
+        amenities,
+        images,
+        listingType,
+        sellerId: currentLoggedInUserId,
+      });
+
+      showSuccessNotification("Property created successfully!");
+      console.log("Property created:", response.data);
+      setIsModalOpen(false);
+    } catch (error: any) {
+      console.error("Error creating property:", error);
+      showErrorNotification(error.response?.data?.message || "Failed to create property.");
+    }
   };
 
   // Table columns
@@ -135,63 +178,11 @@ const PropertyListing: React.FC = () => {
         <Table columns={columns} dataSource={propertyData} pagination={false} scroll={{ x: 1000 }} />
       </div>
 
-      {/* Add Property Modal */}
-      <Modal
-        title="Add New Property"
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Cancel
-          </Button>,
-          <Button key="submit" type="primary" onClick={() => form.submit()}>
-            Submit
-          </Button>,
-        ]}
-      >
-        <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
-          <Form.Item name="title" label="Property Title" rules={[{ required: true, message: 'Please enter the property title' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="price" label="Price ($)" rules={[{ required: true, message: 'Please enter the price' }]}>
-            <InputNumber min={0} style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item name="location" label="Location" rules={[{ required: true, message: 'Please enter the location' }]}>
-            <Input />
-          </Form.Item>
-          <Form.Item name="propertyType" label="Property Type" rules={[{ required: true, message: 'Select property type' }]}>
-            <Select>
-              {propertyTypes.map(type => (
-                <Select.Option key={type} value={type}>{type}</Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name="listingType" label="Listing Type" rules={[{ required: true, message: 'Select listing type' }]}>
-            <Select>
-              {listingTypes.map(type => (
-                <Select.Option key={type} value={type}>{type}</Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name="bedrooms" label="Bedrooms" rules={[{ required: true, message: 'Enter number of bedrooms' }]}>
-            <InputNumber min={1} style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item name="bathrooms" label="Bathrooms" rules={[{ required: true, message: 'Enter number of bathrooms' }]}>
-            <InputNumber min={1} style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item name="area" label="Area (sq ft)" rules={[{ required: true, message: 'Enter area size' }]}>
-            <InputNumber min={100} style={{ width: '100%' }} />
-          </Form.Item>
-          <Form.Item name="amenities" label="Amenities">
-            <Input placeholder="Separate by commas (e.g., Pool, Gym, Parking)" />
-          </Form.Item>
-          <Form.Item name="images" label="Upload Images">
-            <Upload beforeUpload={() => false} listType="picture">
-              <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <AddPropertyModal
+        isOpen={isModalOpen}
+        onClose={handleCancel}
+        onSubmit={handleFormSubmit}
+      />
     </div>
   );
 };

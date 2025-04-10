@@ -9,14 +9,9 @@ import { useRouter } from 'next/navigation';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { isAuthenticated, profileImage, checkAuthStatus, logout } = useAuthStore();
+  const { isAuthenticated, role, checkAuthStatus, logout } = useAuthStore();
   
   const route = useRouter()
-
-  // onClick={() => { 
-  //   logout(); 
-  //   closeMenu(); 
-  // }}
 
   useEffect(() => {
     checkAuthStatus();
@@ -44,6 +39,9 @@ export default function Navbar() {
           <Link href="/seller-account" className="text-white hover:text-gray-300">Sell</Link>
           <Link href="#rent" className="text-white hover:text-gray-300">Rent</Link>
           <Link href="#manage" className="text-white hover:text-gray-300">Manage Rental</Link>
+          {isAuthenticated && (role === 'ADMIN' || role === 'SELLER') && (
+            <Link href="/dashboard" className="text-white hover:text-gray-300">Dashboard</Link>
+          )}
         </div>
 
         {/* Desktop Auth Buttons */}
@@ -51,7 +49,7 @@ export default function Navbar() {
           {isAuthenticated ? (
             <div className="flex items-center space-x-3">
               <Image 
-                src={profileImage ?? '/userdefault.jpg'} 
+                src={'/userdefault.jpg'}
                 alt="User" 
                 width={40} 
                 height={40} 
@@ -107,7 +105,7 @@ export default function Navbar() {
               {isAuthenticated ? (
                 <div className="flex flex-col items-center space-y-4">
                   <Image 
-                    src={profileImage ?? '/userdefault.jpg'} 
+                    src={'/userdefault.jpg'}
                     alt="User" 
                     width={50} 
                     height={50} 

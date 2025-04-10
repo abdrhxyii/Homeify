@@ -5,6 +5,7 @@ import Link from "next/link";
 import { setCookie } from "nookies";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { showSuccessNotification, showErrorNotification } from "@/lib/notificationUtil";
 
 export default function Page() {
   const [error, setError] = useState<string | null>(null);
@@ -39,24 +40,29 @@ export default function Page() {
         maxAge: 30 * 24 * 60 * 60,
       });
 
-      setCookie(null, "user", data.user, {
+      setCookie(null, "user", JSON.stringify(data.user), {
         path: "/",
         maxAge: 30 * 24 * 60 * 60,
       });
 
       checkAuthStatus();
 
+      console.log("User Role:", data.user.role); // Debugging line
+
       if(data.user.role === "ADMIN") {
+        route.push('/dashboard')
+      } else if (data.user.role === "SELLER") {
         route.push('/dashboard')
       } else if (data.user.role === "USER") {
         route.push('/')
       }
 
-      alert(`Welcome ${data.user.name}`);
+      showSuccessNotification(`Welcome ${data.user.name}`);
       console.log("Login Success:", data);
     } catch (error: any) {
       console.error("Login Error:", error.response?.data?.message || error.message);
       setError(error.response?.data?.message || "Something went wrong.");
+      showErrorNotification(error.response?.data?.message || "Something went wrong.");
     } finally {
       setLoading(false);
 
@@ -125,7 +131,7 @@ export default function Page() {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-primary px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                {loading ? 'Loging in...' : 'Login'}
+                {loading ? 'Logging in...' : 'Login'}
               </button>
             </div>
           </form>

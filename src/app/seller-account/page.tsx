@@ -5,6 +5,7 @@ import Image from "next/image";
 import axios from "axios";
 import { setCookie } from "nookies";
 import { useAuthStore } from "@/store/useAuthStore";
+import { showSuccessNotification, showErrorNotification } from "@/lib/notificationUtil"; // Import the notification utility
 
 export default function SellerRegister() {
   const [form, setForm] = useState({
@@ -29,31 +30,28 @@ export default function SellerRegister() {
     setError(""); // Reset error before submission
 
     try {
-      const response = await axios.post("/api/auth", {
+      const response = await axios.post("/api/auth/register", {
         ...form,
         role: "SELLER",
       });
 
-      console.log(response.data, "response.data");
-
       if (response.data.token && response.data.user) {
-        const { _id, name, email, role } = response.data.user;
-
         setCookie(null, "token", response.data.token, {
           path: "/",
           maxAge: 30 * 24 * 60 * 60, // 30 days
         });
 
-        setCookie(null, "user", JSON.stringify({ _id, name, email, role }), {
+        setCookie(null, "user", JSON.stringify(response.data.user), {
           path: "/",
           maxAge: 30 * 24 * 60 * 60, // 30 days
         });
 
         checkAuthStatus(); // Call auth check after successful login
-        alert("Account created successfully!");
+        showSuccessNotification("Account created successfully!"); // Use the success notification
       }
     } catch (error: any) {
       setError(error.response?.data?.message || "Registration failed. Please try again.");
+      showErrorNotification(error.response?.data?.message || "Registration failed."); // Use the error notification
     } finally {
       setLoading(false);
     }

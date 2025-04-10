@@ -5,6 +5,7 @@ import Link from "next/link";
 import { setCookie } from "nookies";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from 'next/navigation';
+import { showSuccessNotification, showErrorNotification } from "@/lib/notificationUtil";
 
 export default function Page() {
   const [name, setName] = useState('');
@@ -16,7 +17,6 @@ export default function Page() {
   const { checkAuthStatus } = useAuthStore();
   const route = useRouter()
 
-
   useEffect(() => {
     checkAuthStatus();
   }, [checkAuthStatus]);
@@ -27,23 +27,35 @@ export default function Page() {
     setError(null);
     
     try {
-      const response = await axios.post('/api/auth', {
+      const response = await axios.post('/api/auth/register', {
         name,
         email,
         phoneNumber,
         password,
       });
+
+      console.log(response.data, "register data")
       
       setCookie(null, 'token', response.data.token, {
         path: '/',
         maxAge: 30 * 24 * 60 * 60, 
       });
+
+      setCookie(null, 'user', JSON.stringify(response.data.user), {
+        path: '/',
+        maxAge: 30 * 24 * 60 * 60, 
+      });
       
       checkAuthStatus();
-      route.push('/')
-      alert('Registration successful');
+      showSuccessNotification('Registration successful');
+      if(response.data.user.role === "ADMIN") {
+        route.push('/dashboard')
+      } else if (response.data.user.role === "USER") {
+        route.push('/')
+      }
     } catch (error: any) {
       setError(error.response?.data?.message || 'Registration failed');
+      showErrorNotification(error.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);
     }
