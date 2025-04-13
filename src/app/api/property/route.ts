@@ -3,21 +3,48 @@ import { connectToDatabase } from "@/lib/database";
 import Property from "@/models/Property";
 import { NextRequest, NextResponse } from "next/server";
 
+export const config = {
+    api: {
+        bodyParser: false,
+    },
+};
+
 export async function POST(req: NextRequest) {
     try {
         await connectToDatabase();
-        const body = await req.json();
-        const { title, description, price, location, propertyType, bedrooms, bathrooms, area, amenities, images, listingType, sellerId } = body;
+        const formData = await req.formData();
 
-        // Validate images
-        if (!images || images.length < 4 || images.length > 6) {
-            return NextResponse.json({ message: "You must upload between 4 to 6 images." }, { status: 400 });
+        const title = formData.get("title") as string;
+        const description = formData.get("description") as string;
+        const price = parseFloat(formData.get("price") as string);
+        const location = formData.get("location") as string;
+        const propertyType = formData.get("propertyType") as string;
+        const bedrooms = parseInt(formData.get("bedrooms") as string);
+        const bathrooms = parseInt(formData.get("bathrooms") as string);
+        const area = parseFloat(formData.get("area") as string);
+        const amenities = JSON.parse(formData.get("amenities") as string);
+        const listingType = formData.get("listingType") as string;
+        const sellerId = formData.get("sellerId") as string;
+
+        const images = formData.getAll("images") as File[];
+
+        console.log('Received images count:', images.length);
+
+        if (!images || images.length < 2 || images.length > 6) {
+            return NextResponse.json(
+                { message: "You must upload between 2 to 6 images." },
+                { status: 400 }
+            );
         }
 
-        // Upload images to Cloudinary
-        const uploadedImageUrls = await uploadImages(images);
+        const imageBuffers = await Promise.all(
+            images.map(async (image) => ({
+                buffer: Buffer.from(await image.arrayBuffer()),
+            }))
+        );
 
-        // Create a new property instance
+        const uploadedImageUrls = await uploadImages(imageBuffers);
+
         const newProperty = new Property({
             title,
             description,
@@ -28,53 +55,135 @@ export async function POST(req: NextRequest) {
             bathrooms,
             area,
             amenities,
-            images: uploadedImageUrls, // Use the uploaded image URLs
+            images: uploadedImageUrls,
             listingType,
-            sellerId, // Foreign key for the seller
+            sellerId,
         });
 
-        // Save the property to the database
         await newProperty.save();
 
-        return NextResponse.json({ 
-            message: "Property created successfully", 
-            property: newProperty 
-        }, { status: 201 });
-
+        return NextResponse.json(
+            {
+                message: "Property created successfully",
+                property: newProperty,
+            },
+            { status: 201 }
+        );
     } catch (error: any) {
-        return NextResponse.json({ message: "Error creating property", error: error.message }, { status: 500 });
+        return NextResponse.json(
+            { message: "Error creating property", error: error.message },
+            { status: 500 }
+        );
     }
 }
 
-// GET: Get all properties
 export async function GET() {
     try {
         await connectToDatabase();
         const properties = await Property.find();
-        return NextResponse.json(properties, { status: 200 });
+        return NextResponse.json({properties: properties}, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ message: "Error fetching properties", error: error.message }, { status: 500 });
     }
 }
 
-// PUT: Update an existing property
 export async function PUT(req: NextRequest) {
     try {
         await connectToDatabase();
-        const { id, ...updateFields } = await req.json();
-        const updatedProperty = await Property.findByIdAndUpdate(id, updateFields, { new: true });
-
-        if (!updatedProperty) {
+        
+        // Handle FormData for PUT requests
+        const formData = await req.formData();
+        
+        const id = formData.get("id") as string;
+        const title = formData.get("title") as string;
+        const description = formData.get("description") as string;
+        const price = parseFloat(formData.get("price") as string);
+        const location = formData.get("location") as string;
+        const propertyType = formData.get("propertyType") as string;
+        const bedrooms = parseInt(formData.get("bedrooms") as string);
+        const bathrooms = parseInt(formData.get("bathrooms") as string);
+        const area = parseFloat(formData.get("area") as string);
+        const amenities = JSON.parse(formData.get("amenities") as string);
+        const listingType = formData.get("listingType") as string;
+        
+        // Check if images were modified
+        const imagesModified = formData.get("imagesModified") === "true";
+        
+        // Find the existing property
+        const existingProperty = await Property.findById(id);
+        
+        if (!existingProperty) {
             return NextResponse.json({ message: "Property not found" }, { status: 404 });
         }
 
-        return NextResponse.json({ message: "Property updated successfully", property: updatedProperty }, { status: 200 });
+        // Prepare the update data
+        const updateData: any = {
+            title,
+            description,
+            price,
+            location,
+            propertyType,
+            bedrooms,
+            bathrooms,
+            area,
+            amenities,
+            listingType
+        };
+        
+        // Handle images if they were modified
+        if (imagesModified) {
+            let finalImages: string[] = [];
+            
+            // Check if we should keep any existing images
+            const keepExistingImagesStr = formData.get("keepExistingImages");
+            if (keepExistingImagesStr) {
+                const keepExistingImages = JSON.parse(keepExistingImagesStr as string);
+                finalImages = [...keepExistingImages];
+            }
+            
+            // Check if new images were uploaded
+            const newImages = formData.getAll("images") as File[];
+            
+            if (newImages && newImages.length > 0) {
+                const imageBuffers = await Promise.all(
+                    newImages.map(async (image) => ({
+                        buffer: Buffer.from(await image.arrayBuffer()),
+                    }))
+                );
+                
+                const uploadedImageUrls = await uploadImages(imageBuffers);
+                finalImages = [...finalImages, ...uploadedImageUrls];
+            }
+            
+            // Validate final image count
+            if (finalImages.length < 2 || finalImages.length > 6) {
+                return NextResponse.json(
+                    { message: "You must have between 2 to 6 images." },
+                    { status: 400 }
+                );
+            }
+            
+            // Add images to update data
+            updateData.images = finalImages;
+        }
+        
+        // Update the property
+        const updatedProperty = await Property.findByIdAndUpdate(id, updateData, { new: true });
+        
+        return NextResponse.json({ 
+            message: "Property updated successfully", 
+            property: updatedProperty 
+        }, { status: 200 });
     } catch (error: any) {
-        return NextResponse.json({ message: "Error updating property", error: error.message }, { status: 500 });
+        console.error("Error updating property:", error);
+        return NextResponse.json({ 
+            message: "Error updating property", 
+            error: error.message 
+        }, { status: 500 });
     }
 }
 
-// DELETE: Delete a property
+
 export async function DELETE(req: NextRequest) {
     try {
         await connectToDatabase();

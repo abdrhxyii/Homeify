@@ -45,7 +45,7 @@ const propertySchema: Schema = new Schema(
     },
     sellerId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',  // Reference to the User model for the seller
+      ref: 'User',
       required: true,
     },
   },
