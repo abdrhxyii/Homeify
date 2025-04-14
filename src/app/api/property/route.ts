@@ -2,12 +2,19 @@ import { uploadImages } from "@/lib/cloudinaryUtil";
 import { connectToDatabase } from "@/lib/database";
 import Property from "@/models/Property";
 import { NextRequest, NextResponse } from "next/server";
+import cloudinary from 'cloudinary';
 
 export const config = {
     api: {
         bodyParser: false,
     },
 };
+
+cloudinary.v2.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: NextRequest) {
     try {
@@ -183,19 +190,47 @@ export async function PUT(req: NextRequest) {
     }
 }
 
-
 export async function DELETE(req: NextRequest) {
     try {
         await connectToDatabase();
         const { id } = await req.json();
-        const deletedProperty = await Property.findByIdAndDelete(id);
 
-        if (!deletedProperty) {
+        const property = await Property.findById(id);
+        if (!property) {
             return NextResponse.json({ message: "Property not found" }, { status: 404 });
         }
 
-        return NextResponse.json({ message: "Property deleted successfully" }, { status: 200 });
+        if (property.images && property.images.length > 0) {
+            const deletePromises = property.images.map(async (imageUrl: string) => {
+                try {
+                    // Extract public ID from URL
+                    // Example URL: https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744630602/properties/mcszdmjplzyk2uwc4awy.webp
+                    const urlParts = imageUrl.split('/');
+                    const versionIndex = urlParts.findIndex(part => part.startsWith('v'));
+                    const publicIdWithExt = urlParts.slice(versionIndex + 1).join('/');
+                    const publicId = publicIdWithExt.split('.')[0]; 
+                    
+                    console.log(`Attempting to delete Cloudinary image with publicId: ${publicId}`);
+                    
+                    const result = await cloudinary.v2.uploader.destroy(publicId, { resource_type: 'image' });
+                    console.log(`Cloudinary delete result for ${publicId}:`, result);
+                    
+                    if (result.result !== 'ok' && result.result !== 'not found') {
+                        throw new Error(`Cloudinary deletion failed for ${publicId}: ${result.result}`);
+                    }
+                } catch (error: any) {
+                    console.error(`Error deleting image ${imageUrl} from Cloudinary:`, error.message);
+                }
+            });
+
+            await Promise.all(deletePromises);
+        }
+
+        await Property.findByIdAndDelete(id);
+
+        return NextResponse.json({ message: "Property and associated images deleted successfully" }, { status: 200 });
     } catch (error: any) {
+        console.error("Error deleting property:", error);
         return NextResponse.json({ message: "Error deleting property", error: error.message }, { status: 500 });
     }
 }
