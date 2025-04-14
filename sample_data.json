@@ -1,0 +1,852 @@
+[
+    {
+      "title": "Modern Downtown Apartment",
+      "description": "Stunning apartment in the heart of downtown with panoramic city views and high-end finishes.",
+      "price": 425000,
+      "location": "123 Main St, Downtown, New York, NY 10001",
+      "propertyType": "apartment",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": 1200,
+      "amenities": ["gym", "pool", "doorman", "parking", "elevator"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631539/properties/kbhlvqpcnoc1uteybqym.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631540/properties/kjhlvqpcnoc1uteybqya.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Luxury Beach Villa",
+      "description": "Spectacular beachfront villa with private access to the shore and breathtaking ocean views.",
+      "price": 1750000,
+      "location": "456 Ocean Drive, Miami Beach, FL 33139",
+      "propertyType": "villa",
+      "bedrooms": 5,
+      "bathrooms": 4.5,
+      "area": 4200,
+      "amenities": ["pool", "spa", "garden", "beach access", "security"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631542/properties/abhlvqpcnoc1uteybqye.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631543/properties/cdhlvqpcnoc1uteybqyf.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Cozy Studio in Arts District",
+      "description": "Charming studio apartment in the vibrant arts district, perfect for young professionals.",
+      "price": 1800,
+      "location": "789 Artist Way, Los Angeles, CA 90013",
+      "propertyType": "studio",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "area": 550,
+      "amenities": ["rooftop terrace", "laundry", "bike storage"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631544/properties/efhlvqpcnoc1uteybqyg.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631545/properties/ghhlvqpcnoc1uteybqyh.webp"
+      ],
+      "listingType": "rental",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Colonial Family Home",
+      "description": "Beautiful colonial-style family home with spacious backyard in a quiet suburban neighborhood.",
+      "price": 575000,
+      "location": "101 Maple Drive, Newton, MA 02458",
+      "propertyType": "house",
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "area": 2800,
+      "amenities": ["garage", "fireplace", "basement", "patio", "garden"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631546/properties/ijhlvqpcnoc1uteybqyi.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631547/properties/klhlvqpcnoc1uteybqyj.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Mountain View Chalet",
+      "description": "Rustic chalet with stunning mountain views, perfect for nature lovers and skiers.",
+      "price": 850000,
+      "location": "202 Pine Ridge, Aspen, CO 81611",
+      "propertyType": "chalet",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "area": 1950,
+      "amenities": ["fireplace", "hot tub", "ski storage", "panoramic views"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631548/properties/mnhlvqpcnoc1uteybqyk.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631549/properties/ophlvqpcnoc1uteybqyl.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Urban Loft Space",
+      "description": "Industrial-style loft with high ceilings and exposed brick in a trendy neighborhood.",
+      "price": 3200,
+      "location": "303 Warehouse District, Chicago, IL 60607",
+      "propertyType": "loft",
+      "bedrooms": 1,
+      "bathrooms": 1.5,
+      "area": 1100,
+      "amenities": ["high ceilings", "exposed brick", "open floor plan", "freight elevator"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631550/properties/qrhlvqpcnoc1uteybqym.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631551/properties/sthlvqpcnoc1uteybqyn.webp"
+      ],
+      "listingType": "rental",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Waterfront Condo",
+      "description": "Elegant waterfront condo with marina views and resort-style amenities.",
+      "price": 675000,
+      "location": "404 Harbor View, San Diego, CA 92101",
+      "propertyType": "condo",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": 1450,
+      "amenities": ["pool", "gym", "concierge", "marina access", "balcony"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631552/properties/uvhlvqpcnoc1uteybqyo.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631553/properties/wxhlvqpcnoc1uteybqyp.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Country Farmhouse",
+      "description": "Charming farmhouse on 5 acres with barn, perfect for homesteading or hobby farming.",
+      "price": 425000,
+      "location": "505 Rural Route, Lancaster, PA 17601",
+      "propertyType": "farmhouse",
+      "bedrooms": 4,
+      "bathrooms": 2.5,
+      "area": 2600,
+      "amenities": ["barn", "acreage", "pond", "fruit trees", "workshop"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631554/properties/yzhlvqpcnoc1uteybqyq.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631555/properties/abhlvqpcnoc1uteybqyr.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Luxury Penthouse",
+      "description": "Exquisite penthouse with private rooftop terrace and 360-degree views of the city skyline.",
+      "price": 2500000,
+      "location": "606 Sky Tower, Seattle, WA 98101",
+      "propertyType": "penthouse",
+      "bedrooms": 3,
+      "bathrooms": 3.5,
+      "area": 3200,
+      "amenities": ["rooftop terrace", "floor-to-ceiling windows", "concierge", "private elevator", "wine cellar"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631556/properties/cdhlvqpcnoc1uteybqys.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631557/properties/efhlvqpcnoc1uteybqyt.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Historic Brownstone",
+      "description": "Beautifully restored 19th-century brownstone with original architectural details.",
+      "price": 1950000,
+      "location": "707 Heritage Row, Boston, MA 02116",
+      "propertyType": "townhouse",
+      "bedrooms": 4,
+      "bathrooms": 3.5,
+      "area": 3800,
+      "amenities": ["original woodwork", "garden", "fireplace", "high ceilings", "period details"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631558/properties/ghhlvqpcnoc1uteybqyu.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631559/properties/ijhlvqpcnoc1uteybqyv.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Desert Ranch Property",
+      "description": "Expansive ranch with desert views and modern amenities, perfect for equestrian enthusiasts.",
+      "price": 1200000,
+      "location": "808 Desert Trail, Scottsdale, AZ 85262",
+      "propertyType": "ranch",
+      "bedrooms": 3,
+      "bathrooms": 2.5,
+      "area": 2400,
+      "amenities": ["stables", "riding arena", "pool", "guest house", "desert landscaping"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631560/properties/klhlvqpcnoc1uteybqyw.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631561/properties/mnhlvqpcnoc1uteybqyx.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Lakefront Cottage",
+      "description": "Quaint lakefront cottage with private dock and stunning sunset views.",
+      "price": 495000,
+      "location": "909 Lakeshore Drive, Lake Tahoe, CA 96150",
+      "propertyType": "cottage",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "area": 1100,
+      "amenities": ["dock", "lakefront", "deck", "fireplace", "boat slip"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631562/properties/ophlvqpcnoc1uteybqyy.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631563/properties/qrhlvqpcnoc1uteybqyz.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Modern Duplex",
+      "description": "Contemporary duplex with separate entrances, ideal for investment or multi-generational living.",
+      "price": 750000,
+      "location": "1010 Split Street, Portland, OR 97209",
+      "propertyType": "duplex",
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "area": 2800,
+      "amenities": ["dual kitchens", "separate entrances", "shared yard", "modern finishes"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631564/properties/sthlvqpcnoc1uteybqz0.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631565/properties/uvhlvqpcnoc1uteybqz1.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Modern Mobile Home",
+      "description": "Updated mobile home in well-maintained community with resort-style amenities.",
+      "price": 125000,
+      "location": "1111 Rolling Estates, Phoenix, AZ 85022",
+      "propertyType": "mobile home",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": 980,
+      "amenities": ["community pool", "clubhouse", "covered parking", "storage shed"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631566/properties/wxhlvqpcnoc1uteybqz2.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631567/properties/yzhlvqpcnoc1uteybqz3.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Downtown Co-op",
+      "description": "Stylish co-op apartment in a historic building with doorman and elegant common areas.",
+      "price": 580000,
+      "location": "1212 Heritage Square, New York, NY 10023",
+      "propertyType": "co-op",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "area": 850,
+      "amenities": ["doorman", "elevator", "laundry room", "storage", "roof deck"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631568/properties/abhlvqpcnoc1uteybqz4.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631569/properties/cdhlvqpcnoc1uteybqz5.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Retail Space in Shopping District",
+      "description": "Prime retail space with high foot traffic in a popular shopping district.",
+      "price": 5500,
+      "location": "1313 Commerce Boulevard, Austin, TX 78701",
+      "propertyType": "commercial",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "area": 1800,
+      "amenities": ["storefront display", "storage room", "loading zone", "high foot traffic"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631570/properties/efhlvqpcnoc1uteybqz6.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631571/properties/ghhlvqpcnoc1uteybqz7.webp"
+      ],
+      "listingType": "rental",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Industrial Warehouse",
+      "description": "Spacious industrial warehouse with loading docks and office space in industrial zone.",
+      "price": 1250000,
+      "location": "1414 Factory Lane, Detroit, MI 48209",
+      "propertyType": "industrial",
+      "bedrooms": 0,
+      "bathrooms": 2,
+      "area": 12000,
+      "amenities": ["loading docks", "high ceilings", "office space", "security system", "parking lot"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631572/properties/ijhlvqpcnoc1uteybqz8.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631573/properties/klhlvqpcnoc1uteybqz9.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Mixed-Use Building",
+      "description": "Three-story building with retail on ground floor and residential units above.",
+      "price": 1750000,
+      "location": "1515 Urban Center, Denver, CO 80202",
+      "propertyType": "mixed-use",
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "area": 5500,
+      "amenities": ["retail space", "residential units", "separate entrances", "roof access"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631574/properties/mnhlvqpcnoc1uteybqza.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631575/properties/ophlvqpcnoc1uteybqzb.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Golf Course Bungalow",
+      "description": "Single-level bungalow overlooking the 9th hole with easy golf course access.",
+      "price": 685000,
+      "location": "1616 Fairway Drive, Palm Springs, CA 92264",
+      "propertyType": "bungalow",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "area": 1850,
+      "amenities": ["golf course view", "patio", "clubhouse access", "garage", "community pool"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631576/properties/qrhlvqpcnoc1uteybqzc.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631577/properties/sthlvqpcnoc1uteybqzd.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Luxury Mansion Estate",
+      "description": "Opulent mansion on 2 acres with tennis court, pool, and guest house.",
+      "price": 4500000,
+      "location": "1717 Estate Road, Greenwich, CT 06830",
+      "propertyType": "mansion",
+      "bedrooms": 7,
+      "bathrooms": 8.5,
+      "area": 12500,
+      "amenities": ["tennis court", "pool", "guest house", "wine cellar", "home theater", "gated entry"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631578/properties/uvhlvqpcnoc1uteybqze.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631579/properties/wxhlvqpcnoc1uteybqzf.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Development Land",
+      "description": "Prime development land zoned for residential construction with utilities ready.",
+      "price": 850000,
+      "location": "1818 Future Drive, Nashville, TN 37209",
+      "propertyType": "land",
+      "bedrooms": 0,
+      "bathrooms": 0,
+      "area": 43560,
+      "amenities": ["utilities available", "cleared", "road access", "residential zoning"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631580/properties/yzhlvqpcnoc1uteybqzg.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631581/properties/abhlvqpcnoc1uteybqzh.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Luxury High-Rise Apartment",
+      "description": "Elegant high-rise apartment with premium finishes and stunning city views.",
+      "price": 3800,
+      "location": "1919 Sky Avenue, Houston, TX 77002",
+      "propertyType": "apartment",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": 1350,
+      "amenities": ["concierge", "gym", "pool", "valet parking", "pet spa", "rooftop lounge"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631582/properties/cdhlvqpcnoc1uteybqzi.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631583/properties/efhlvqpcnoc1uteybqzj.webp"
+      ],
+      "listingType": "rental",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Mediterranean Villa",
+      "description": "Exquisite Mediterranean-style villa with courtyard and outdoor kitchen.",
+      "price": 1350000,
+      "location": "2020 Sunny Lane, Santa Barbara, CA 93108",
+      "propertyType": "villa",
+      "bedrooms": 4,
+      "bathrooms": 3.5,
+      "area": 3600,
+      "amenities": ["courtyard", "outdoor kitchen", "fountain", "wine cellar", "pool"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631584/properties/ghhlvqpcnoc1uteybqzk.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631585/properties/ijhlvqpcnoc1uteybqzl.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Urban Micro Studio",
+      "description": "Efficiently designed micro studio in the heart of the city with clever storage solutions.",
+      "price": 1500,
+      "location": "2121 Compact Lane, San Francisco, CA 94105",
+      "propertyType": "studio",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "area": 400,
+      "amenities": ["murphy bed", "built-in storage", "rooftop access", "bike storage"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631586/properties/klhlvqpcnoc1uteybqzm.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631587/properties/mnhlvqpcnoc1uteybqzn.webp"
+      ],
+      "listingType": "rental",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Riverfront Home",
+      "description": "Spacious family home with private river access and outdoor entertainment area.",
+      "price": 875000,
+      "location": "2222 River Road, Savannah, GA 31401",
+      "propertyType": "house",
+      "bedrooms": 4,
+      "bathrooms": 3.5,
+      "area": 3200,
+      "amenities": ["dock", "river access", "outdoor kitchen", "fire pit", "screened porch"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631588/properties/ophlvqpcnoc1uteybqzo.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631589/properties/qrhlvqpcnoc1uteybqzp.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Mountain Ski Chalet",
+      "description": "Cozy ski-in/ski-out chalet with stone fireplace and stunning mountain views.",
+      "price": 1200000,
+      "location": "2323 Slope Side, Park City, UT 84060",
+      "propertyType": "chalet",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "area": 2100,
+      "amenities": ["ski-in/ski-out", "hot tub", "stone fireplace", "boot warmer", "mountain views"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631590/properties/sthlvqpcnoc1uteybqzq.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631591/properties/uvhlvqpcnoc1uteybqzr.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Historic Industrial Loft",
+      "description": "Converted factory loft with original industrial elements and contemporary finishes.",
+      "price": 795000,
+      "location": "2424 Factory Row, Minneapolis, MN 55401",
+      "propertyType": "loft",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "area": 1800,
+      "amenities": ["original brick walls", "industrial windows", "high ceilings", "open floor plan"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631592/properties/wxhlvqpcnoc1uteybqzs.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631593/properties/yzhlvqpcnoc1uteybqzt.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Luxury Beachfront Condo",
+      "description": "Upscale condo with direct beach access and panoramic ocean views.",
+      "price": 1250000,
+      "location": "2525 Shoreline Drive, Malibu, CA 90265",
+      "propertyType": "condo",
+      "bedrooms": 3,
+      "bathrooms": 2.5,
+      "area": 2000,
+      "amenities": ["beach access", "balcony", "pool", "gym", "secured parking"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631594/properties/abhlvqpcnoc1uteybqzu.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631595/properties/cdhlvqpcnoc1uteybqzv.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Organic Farmhouse",
+      "description": "Working organic farm with updated farmhouse and multiple outbuildings.",
+      "price": 950000,
+      "location": "2626 Harvest Lane, Eugene, OR 97405",
+      "propertyType": "farmhouse",
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "area": 2400,
+      "amenities": ["barn", "greenhouse", "orchard", "garden", "creek", "pasture"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631596/properties/efhlvqpcnoc1uteybqzw.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631597/properties/ghhlvqpcnoc1uteybqzx.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+      "title": "Downtown Corner Penthouse",
+      "description": "Corner penthouse unit with wrap-around balcony and custom designer finishes.",
+      "price": 1850000,
+      "location": "2727 Urban Heights, Atlanta, GA 30308",
+      "propertyType": "penthouse",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "area": 2800,
+      "amenities": ["wrap-around balcony", "floor-to-ceiling windows", "custom cabinets", "smart home features"],
+      "images": [
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631596/properties/efhlvqpcnoc1uteybqzw.webp",
+        "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631597/properties/ghhlvqpcnoc1uteybqzx.webp"
+      ],
+      "listingType": "sale",
+      "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Seaside Beach Bungalow",
+        "description": "Charming beach bungalow steps from the shore with nautical-inspired decor and outdoor shower.",
+        "price": 695000,
+        "location": "2828 Coastal Highway, Outer Banks, NC 27927",
+        "propertyType": "bungalow",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "area": 950,
+        "amenities": ["beach access", "outdoor shower", "deck", "hammock", "firepit"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631598/properties/ijhlvqpcnoc1uteybqzy.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631599/properties/klhlvqpcnoc1uteybqzz.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Hillside Mansion with City Views",
+        "description": "Expansive hillside mansion with infinity pool and panoramic views of the city skyline.",
+        "price": 7250000,
+        "location": "2929 Summit Drive, Beverly Hills, CA 90210",
+        "propertyType": "mansion",
+        "bedrooms": 8,
+        "bathrooms": 10,
+        "area": 15000,
+        "amenities": ["infinity pool", "home theater", "wine cellar", "elevator", "smart home system", "security"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631600/properties/mnhlvqpcnoc1uteybr00.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631601/properties/ophlvqpcnoc1uteybr01.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Lakefront Land Parcel",
+        "description": "Pristine 5-acre lakefront plot with approved building permits and private boat launch.",
+        "price": 395000,
+        "location": "3030 Lakeview Trail, Lake Placid, NY 12946",
+        "propertyType": "land",
+        "bedrooms": 0,
+        "bathrooms": 0,
+        "area": 217800,
+        "amenities": ["lakefront", "boat launch", "building permits", "utilities ready", "wooded"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631602/properties/qrhlvqpcnoc1uteybr02.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631603/properties/sthlvqpcnoc1uteybr03.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Smart Home Townhouse",
+        "description": "Modern townhouse with integrated smart home technology and energy-efficient features.",
+        "price": 575000,
+        "location": "3131 Tech Avenue, Raleigh, NC 27601",
+        "propertyType": "townhouse",
+        "bedrooms": 3,
+        "bathrooms": 2.5,
+        "area": 2100,
+        "amenities": ["smart home system", "solar panels", "EV charging", "automated blinds", "security cameras"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631604/properties/uvhlvqpcnoc1uteybr04.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631605/properties/wxhlvqpcnoc1uteybr05.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Japanese-Inspired Cottage",
+        "description": "Tranquil cottage with Japanese garden, koi pond, and traditional architectural elements.",
+        "price": 525000,
+        "location": "3232 Zen Path, Portland, OR 97209",
+        "propertyType": "cottage",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "area": 1200,
+        "amenities": ["Japanese garden", "koi pond", "shoji screens", "bamboo flooring", "meditation space"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631606/properties/yzhlvqpcnoc1uteybr06.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631607/properties/abhlvqpcnoc1uteybr07.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Medical Office Building",
+        "description": "Purpose-built medical office building with multiple examination rooms and reception area.",
+        "price": 8500,
+        "location": "3333 Healthcare Boulevard, Cincinnati, OH 45202",
+        "propertyType": "commercial",
+        "bedrooms": 0,
+        "bathrooms": 3,
+        "area": 3800,
+        "amenities": ["examination rooms", "waiting area", "accessibility features", "parking", "medical waste disposal"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631608/properties/cdhlvqpcnoc1uteybr08.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631609/properties/efhlvqpcnoc1uteybr09.webp"
+        ],
+        "listingType": "rental",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Food Processing Facility",
+        "description": "Certified food processing facility with cold storage and distribution infrastructure.",
+        "price": 2750000,
+        "location": "3434 Production Way, St. Louis, MO 63103",
+        "propertyType": "industrial",
+        "bedrooms": 0,
+        "bathrooms": 4,
+        "area": 25000,
+        "amenities": ["cold storage", "loading docks", "commercial kitchen", "drainage system", "office space"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631610/properties/ghhlvqpcnoc1uteybr10.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631611/properties/ijhlvqpcnoc1uteybr11.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Modern Retail with Apartments",
+        "description": "Contemporary building with ground-floor retail space and luxury apartments above.",
+        "price": 2200000,
+        "location": "3535 Main Street, Madison, WI 53703",
+        "propertyType": "mixed-use",
+        "bedrooms": 6,
+        "bathrooms": 4,
+        "area": 8500,
+        "amenities": ["storefront", "residential units", "elevator", "rooftop patio", "secure entry"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631612/properties/klhlvqpcnoc1uteybr12.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631613/properties/mnhlvqpcnoc1uteybr13.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Cattle Ranch with Homestead",
+        "description": "Working cattle ranch with modern homestead, multiple barns, and grazing pastures.",
+        "price": 1850000,
+        "location": "3636 Range Road, Bozeman, MT 59715",
+        "propertyType": "ranch",
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "area": 3200,
+        "amenities": ["barns", "corrals", "grazing land", "equipment shed", "spring-fed pond"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631614/properties/ophlvqpcnoc1uteybr14.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631615/properties/qrhlvqpcnoc1uteybr15.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Off-Grid Mountain Cabin",
+        "description": "Self-sufficient cabin with solar power, well water, and stunning wilderness views.",
+        "price": 375000,
+        "location": "3737 Wilderness Trail, Telluride, CO 81435",
+        "propertyType": "cottage",
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "area": 850,
+        "amenities": ["solar power", "well water", "wood stove", "rainwater collection", "hiking trails"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631616/properties/sthlvqpcnoc1uteybr16.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631617/properties/uvhlvqpcnoc1uteybr17.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Renovated Artist Duplex",
+        "description": "Creatively renovated duplex with studios perfect for artists or creative professionals.",
+        "price": 625000,
+        "location": "3838 Gallery Row, New Orleans, LA 70116",
+        "propertyType": "duplex",
+        "bedrooms": 4,
+        "bathrooms": 2,
+        "area": 2400,
+        "amenities": ["studio spaces", "skylights", "gallery wall", "separate entrances", "courtyard"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631618/properties/wxhlvqpcnoc1uteybr18.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631619/properties/yzhlvqpcnoc1uteybr19.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Waterfront Mobile Home",
+        "description": "Well-maintained mobile home in premium waterfront lot with community amenities.",
+        "price": 195000,
+        "location": "3939 Shoreline Community, Tampa, FL 33611",
+        "propertyType": "mobile home",
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "area": 1100,
+        "amenities": ["waterfront view", "deck", "boat slip", "community clubhouse", "pool"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631620/properties/abhlvqpcnoc1uteybr20.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631621/properties/cdhlvqpcnoc1uteybr21.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Historic Co-op in Arts District",
+        "description": "Beautifully maintained historic co-op in vibrant arts district with original details.",
+        "price": 420000,
+        "location": "4040 Heritage Circle, Philadelphia, PA 19123",
+        "propertyType": "co-op",
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "area": 925,
+        "amenities": ["hardwood floors", "original moldings", "fireplace", "shared garden", "basement storage"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631622/properties/efhlvqpcnoc1uteybr22.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631623/properties/ghhlvqpcnoc1uteybr23.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Converted Church Loft",
+        "description": "Unique loft apartment in converted historic church with soaring ceilings and stained glass.",
+        "price": 850000,
+        "location": "4141 Sanctuary Place, Pittsburgh, PA 15222",
+        "propertyType": "loft",
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "area": 2200,
+        "amenities": ["cathedral ceilings", "stained glass windows", "exposed beams", "bell tower", "arched doorways"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631624/properties/ijhlvqpcnoc1uteybr24.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631625/properties/klhlvqpcnoc1uteybr25.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Downtown Studio with Murphy Bed",
+        "description": "Efficient studio apartment with custom murphy bed and premium location near restaurants and nightlife.",
+        "price": 1650,
+        "location": "4242 Urban Core, Nashville, TN 37203",
+        "propertyType": "studio",
+        "bedrooms": 0,
+        "bathrooms": 1,
+        "area": 475,
+        "amenities": ["murphy bed", "built-in storage", "juliet balcony", "fitness center", "rooftop access"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631626/properties/mnhlvqpcnoc1uteybr26.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631627/properties/ophlvqpcnoc1uteybr27.webp"
+        ],
+        "listingType": "rental",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Mid-Century Modern Home",
+        "description": "Authentic mid-century modern home with period details, walls of glass, and open floor plan.",
+        "price": 950000,
+        "location": "4343 Modernist Way, Palm Springs, CA 92262",
+        "propertyType": "house",
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "area": 2150,
+        "amenities": ["walls of glass", "terrazzo floors", "carport", "kidney-shaped pool", "desert landscaping"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631628/properties/qrhlvqpcnoc1uteybr28.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631629/properties/sthlvqpcnoc1uteybr29.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Alpine Ski Chalet",
+        "description": "Traditional alpine chalet with wood-burning fireplace and breathtaking mountain scenery.",
+        "price": 1450000,
+        "location": "4444 Mountain High, Vail, CO 81657",
+        "propertyType": "chalet",
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "area": 2800,
+        "amenities": ["wood-burning fireplace", "sauna", "ski storage", "covered deck", "vaulted ceilings"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631630/properties/uvhlvqpcnoc1uteybr30.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631631/properties/wxhlvqpcnoc1uteybr31.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Designer Penthouse with Private Pool",
+        "description": "Magnificent penthouse with private rooftop pool and custom interior design throughout.",
+        "price": 3500000,
+        "location": "4545 Luxury Lane, Dallas, TX 75201",
+        "propertyType": "penthouse",
+        "bedrooms": 3,
+        "bathrooms": 3.5,
+        "area": 4200,
+        "amenities": ["private pool", "outdoor kitchen", "custom furnishings", "home automation", "private elevator"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631632/properties/yzhlvqpcnoc1uteybr32.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631633/properties/abhlvqpcnoc1uteybr33.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Urban Micro Apartment",
+        "description": "Innovative micro apartment with transforming furniture and efficient design.",
+        "price": 1250,
+        "location": "4646 Compact Court, Seattle, WA 98101",
+        "propertyType": "apartment",
+        "bedrooms": 0,
+        "bathrooms": 1,
+        "area": 350,
+        "amenities": ["transforming furniture", "built-in storage", "smart appliances", "community space"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631634/properties/cdhlvqpcnoc1uteybr34.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631635/properties/efhlvqpcnoc1uteybr35.webp"
+        ],
+        "listingType": "rental",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    },
+    {
+        "title": "Horse Property with Custom Barn",
+        "description": "Equestrian property with custom barn, riding arena, and renovated farmhouse.",
+        "price": 1350000,
+        "location": "4747 Equestrian Drive, Lexington, KY 40511",
+        "propertyType": "farmhouse",
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "area": 3600,
+        "amenities": ["horse stalls", "riding arena", "tack room", "fenced pastures", "pond"],
+        "images": [
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631636/properties/ghhlvqpcnoc1uteybr36.webp",
+            "https://res.cloudinary.com/ddgeqo5y2/image/upload/v1744631637/properties/ijhlvqpcnoc1uteybr37.webp"
+        ],
+        "listingType": "sale",
+        "sellerId": "67f6698aa698e7ac8520c59a"
+    }
+]

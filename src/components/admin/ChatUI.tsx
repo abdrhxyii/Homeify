@@ -1,122 +1,81 @@
-import { useState } from "react";
-import { Avatar, List, Modal, Input, Button } from "antd";
-import { SendOutlined } from "@ant-design/icons";
+import React, { useState } from 'react';
 
-interface User {
-  id: number;
-  name: string;
-  avatar: string;
-  lastMessage: string;
-}
-
-interface Message {
-  sender: "me" | "them";
-  text: string;
-}
-
-const users: User[] = [
-  { id: 1, name: "Alice", avatar: "https://i.pravatar.cc/40?img=1", lastMessage: "Hey, how are you?" },
-  { id: 2, name: "Bob", avatar: "https://i.pravatar.cc/40?img=2", lastMessage: "See you tomorrow!" },
+const users = [
+    { id: 1, name: 'User 1', avatar: 'https://i.pravatar.cc/40?img=1' },
+    { id: 2, name: 'User 2', avatar: 'https://i.pravatar.cc/40?img=2' },
+    { id: 3, name: 'User 3', avatar: 'https://i.pravatar.cc/40?img=3' },
 ];
 
-export default function ChatUI() {
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [message, setMessage] = useState<string>("");
-
-  const openChat = (user: User) => {
-    setSelectedUser(user);
-    setMessages([
-      { sender: "them", text: user.lastMessage },
-      { sender: "me", text: "Sure! See you then." },
+const ChatUI: React.FC = () => {
+    const [selectedUser, setSelectedUser] = useState(users[0]);
+    const [messages, setMessages] = useState([
+        { user: 'assistant', text: 'Hello! How can I help you today?' },
+        { user: 'user', text: 'I need assistance with my order.' },
+        { user: 'assistant', text: 'Sure! Can you provide me with your order number?' },
+        { user: 'user', text: 'It\'s 12345.' },
     ]);
-  };
+    const [inputValue, setInputValue] = useState('');
 
-  const sendMessage = () => {
-    if (message.trim() === "") return;
-    setMessages([...messages, { sender: "me", text: message }]);
-    setMessage("");
-  };
+    const handleUserClick = (user: any) => {
+        setSelectedUser(user);
+        // Here you can load the user's specific messages if needed
+    };
 
-  return (
-    <div className="flex h-auto bg-gray-100 p-4">
-      {/* Sidebar */}
-      <div className="w-full bg-white rounded-lg p-4">
-        <h2 className="text-lg font-semibold mb-4 text-gray-700">Chats</h2>
-        <List
-          itemLayout="horizontal"
-          dataSource={users}
-          renderItem={(user) => (
-            <List.Item
-              onClick={() => openChat(user)}
-              className="cursor-pointer hover:bg-gray-200 p-3 rounded-lg transition duration-200"
-            >
-              <List.Item.Meta
-                avatar={<Avatar src={user.avatar} />}
-                title={<span className="font-medium text-gray-800">{user.name}</span>}
-                description={<span className="text-gray-500">{user.lastMessage}</span>}
-              />
-            </List.Item>
-          )}
-        />
-      </div>
-
-      {/* Chat Modal */}
-      <Modal
-        title={
-          selectedUser && (
-            <div className="flex items-center space-x-3">
-              <Avatar src={selectedUser.avatar} />
-              <span className="text-lg font-semibold text-gray-800">{selectedUser.name}</span>
-            </div>
-          )
+    const handleSendMessage = () => {
+        if (inputValue.trim()) {
+            setMessages([...messages, { user: 'user', text: inputValue }]);
+            setInputValue(''); // Clear the input field after sending
         }
-        open={!!selectedUser}
-        onCancel={() => setSelectedUser(null)}
-        footer={null}
-        centered
-        className="rounded-lg"
-      >
-        {/* Chat Messages */}
-        <div className="h-auto overflow-y-auto p-4 bg-gray-100 rounded-lg shadow-inner space-y-3">
-          {messages.map((msg, index) => (
-            <div key={index} className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}>
-              <div className="flex items-center space-x-2">
-                {msg.sender !== "me" && (
-                  <Avatar src={selectedUser?.avatar} size={32} />
-                )}
-                <div
-                  className={`px-4 py-2 rounded-2xl shadow-md max-w-xs ${
-                    msg.sender === "me"
-                      ? "bg-blue-500 text-white rounded-tr-none"
-                      : "bg-white text-gray-800 rounded-tl-none"
-                  }`}
-                >
-                  {msg.text}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+    };
 
-        {/* Chat Input */}
-        <div className="mt-4 flex items-center bg-white p-3 rounded-lg shadow-md">
-          <Input
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type a message..."
-            className="flex-1 p-2 rounded-lg border border-gray-300 focus:ring focus:ring-blue-300"
-          />
-          <Button
-            type="primary"
-            className="ml-2 flex items-center px-4 py-2 text-lg"
-            icon={<SendOutlined />}
-            onClick={sendMessage}
-          >
-            Send
-          </Button>
+    return (
+        <div className="flex flex-col h-screen bg-gray-100 md:flex-row">
+            <div className="w-full md:w-1/4 border-b md:border-r border-gray-300 p-4 md:border-b-0">
+                <h2 className="text-lg font-semibold mb-4">Users</h2>
+                <ul>
+                    {users.map(user => (
+                        <li
+                            key={user.id}
+                            className="flex items-center p-2 cursor-pointer hover:bg-gray-200"
+                            onClick={() => handleUserClick(user)}
+                        >
+                            <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full mr-2" />
+                            <span>{user.name}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            <div className="flex-1 flex flex-col">
+                <div className="flex-1 overflow-y-auto p-4">
+                    <div className="flex flex-col space-y-4">
+                        {/* Display messages for the selected user */}
+                        {messages.map((msg, index) => (
+                            <div key={index} className={`flex items-start ${msg.user === 'user' ? 'justify-end' : ''}`}>
+                                <div className={`p-2 rounded-lg max-w-xs ${msg.user === 'user' ? 'bg-gray-300 text-black' : 'bg-blue-500 text-white'}`}>
+                                    {msg.text}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="p-4 border-t border-gray-300 flex items-center sticky bottom-0 bg-gray-100">
+                    <input
+                        type="text"
+                        placeholder="Type your message..."
+                        className="w-full p-2 border border-gray-300 rounded-lg mr-2"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                    />
+                    <button
+                        onClick={handleSendMessage}
+                        className="bg-blue-500 text-white p-2 rounded-lg"
+                    >
+                        Send
+                    </button>
+                </div>
+            </div>
         </div>
-      </Modal>
-    </div>
-  );
-}
+    );
+};
+
+export default ChatUI;

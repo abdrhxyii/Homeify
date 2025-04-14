@@ -129,12 +129,16 @@ const PropertyListing: React.FC = () => {
         Add Property
       </Button>
 
-      <Table
-        columns={columns}
-        dataSource={properties}
-        rowKey="_id"
-        loading={loading}
-      />
+      <div style={{ overflow: 'auto', maxHeight: '600px' }}>
+        <Table
+          columns={columns}
+          dataSource={properties}
+          rowKey="_id"
+          loading={loading}
+          scroll={{ x: 400 }}
+          sticky
+        />
+      </div>
 
       <AddPropertyModal
         visible={modalVisible}

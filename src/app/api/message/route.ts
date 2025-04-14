@@ -1,66 +1,71 @@
 import { connectToDatabase } from "@/lib/database";
-import Message from "@/models/Message";
+import Message from "@/models/Message"; // Assuming you have a Message model
+import User from "@/models/User"; // Import User model
 import { NextRequest, NextResponse } from "next/server";
 
-// POST: Create a new message
 export async function POST(req: NextRequest) {
     try {
         await connectToDatabase();
-        const body = await req.json();
-        const { receiverId, senderId, content, propertyId } = body;
+        const { senderId, receiverId, content, propertyId } = await req.json();
 
+        // Check sender's role
+        const sender = await User.findById(senderId);
+        if (!sender) {
+            return NextResponse.json({ message: "Sender not found" }, { status: 404 });
+        }
+
+        if (sender.role !== 'USER') {
+            return NextResponse.json({ message: "Only users can send messages first." }, { status: 403 });
+        }
+
+        // Check receiver's role
+        const receiver = await User.findById(receiverId);
+        if (!receiver) {
+            return NextResponse.json({ message: "Receiver not found" }, { status: 404 });
+        }
+
+        if (receiver.role !== 'SELLER') {
+            return NextResponse.json({ message: "Receiver must be a seller." }, { status: 403 });
+        }
+
+        // Create a new message
         const newMessage = new Message({
-            receiverId,
             senderId,
+            receiverId,
             content,
             propertyId,
+            timestamp: new Date(),
         });
 
         await newMessage.save();
 
-        return NextResponse.json({ 
-            message: "Message sent successfully", 
-            data: newMessage 
-        }, { status: 201 });
-
+        return NextResponse.json(
+            { message: newMessage },
+            { status: 201 }
+        );
     } catch (error: any) {
-        return NextResponse.json({ message: "Error sending message", error: error.message }, { status: 500 });
+        return NextResponse.json(
+            { message: "Error sending message", error: error.message },
+            { status: 500 }
+        );
     }
 }
 
-// GET: Retrieve messages for a specific user
+// You can also implement a GET method to fetch messages if needed
 export async function GET(req: NextRequest) {
     try {
         await connectToDatabase();
-        const { searchParams } = new URL(req.url); // Use URL to access query parameters
-        const userId = searchParams.get('userId'); // Get userId from query parameters
+        const { senderId, receiverId } = await req.json();
+
         const messages = await Message.find({
             $or: [
-                { receiverId: userId },
-                { senderId: userId }
+                { senderId, receiverId },
+                { senderId: receiverId, receiverId: senderId }
             ]
-        }).populate('receiverId senderId propertyId'); // Populate to get user and property details
+        }).sort({ timestamp: 1 });
 
-        return NextResponse.json(messages, { status: 200 });
+        return NextResponse.json({ messages }, { status: 200 });
     } catch (error: any) {
         return NextResponse.json({ message: "Error fetching messages", error: error.message }, { status: 500 });
     }
 }
-
-// DELETE: Delete a specific message
-export async function DELETE(req: NextRequest) {
-    try {
-        await connectToDatabase();
-        const { id } = await req.json(); // Expecting the message ID in the request body
-        const deletedMessage = await Message.findByIdAndDelete(id);
-
-        if (!deletedMessage) {
-            return NextResponse.json({ message: "Message not found" }, { status: 404 });
-        }
-
-        return NextResponse.json({ message: "Message deleted successfully" }, { status: 200 });
-    } catch (error: any) {
-        return NextResponse.json({ message: "Error deleting message", error: error.message }, { status: 500 });
-    }
-}
-
