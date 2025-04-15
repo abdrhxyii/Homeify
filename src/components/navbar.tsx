@@ -43,11 +43,11 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`p-4 w-full fixed top-0 z-10 transition-all duration-300 ${
-        isScrolled
-          ? 'md:bg-primary/30 md:backdrop-blur-md md:border-b md:border-white/20'
-          : 'md:bg-primary'
-      } bg-primary`}
+    className={`p-4 w-full fixed top-0 z-50 transition-all duration-300 backdrop-blur-md ${
+      isScrolled
+        ? 'bg-primary/30 border-b border-white/20'
+        : 'bg-primary/80'
+    }`}    
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Logo */}
@@ -67,7 +67,7 @@ export default function Navbar() {
             Home
           </Link>
           <Link
-            href="#buy"
+            href="/buy"
             className={`text-white hover:text-secondary ${
               activeItem === 'buy' ? 'text-secondary font-bold' : ''
             }`}
@@ -75,17 +75,19 @@ export default function Navbar() {
           >
             Buy
           </Link>
+          {!isAuthenticated && (
+            <Link
+              href="/seller-account"
+              className={`text-white hover:text-secondary ${
+                activeItem === 'sell' ? 'text-secondary font-bold' : ''
+              }`}
+              onClick={() => handleItemClick('sell')}
+            >
+              Sell
+            </Link>
+          )}
           <Link
-            href="/seller-account"
-            className={`text-white hover:text-secondary ${
-              activeItem === 'sell' ? 'text-secondary font-bold' : ''
-            }`}
-            onClick={() => handleItemClick('sell')}
-          >
-            Sell
-          </Link>
-          <Link
-            href="#rent"
+            href="/rent"
             className={`text-white hover:text-secondary ${
               activeItem === 'rent' ? 'text-secondary font-bold' : ''
             }`}
@@ -182,7 +184,7 @@ export default function Navbar() {
             </button>
 
             <Link
-              href="#buy"
+              href="/buy"
               className={`py-2 border-b border-black ${
                 activeItem === 'buy' ? 'text-secondary font-bold' : ''
               }`}
@@ -190,17 +192,19 @@ export default function Navbar() {
             >
               Buy
             </Link>
+            {!isAuthenticated && (
+              <Link
+                href="#sell"
+                className={`py-2 border-b border-black ${
+                  activeItem === 'sell' ? 'text-secondary font-bold' : ''
+                }`}
+                onClick={() => handleItemClick('sell')}
+              >
+                Sell
+              </Link>
+            )}
             <Link
-              href="#sell"
-              className={`py-2 border-b border-black ${
-                activeItem === 'sell' ? 'text-secondary font-bold' : ''
-              }`}
-              onClick={() => handleItemClick('sell')}
-            >
-              Sell
-            </Link>
-            <Link
-              href="#rent"
+              href="/rent"
               className={`py-2 border-b border-black ${
                 activeItem === 'rent' ? 'text-secondary font-bold' : ''
               }`}
