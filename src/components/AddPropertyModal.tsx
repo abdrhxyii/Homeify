@@ -5,6 +5,32 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import type { Property, PropertyFormData } from '@/types/interfaces';
 import { useAuthStore } from '@/store/useAuthStore';
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+import dynamic from 'next/dynamic';
+
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading Editor...</p>,
+});
+
+// Define Quill modules and formats
+const quillModules = {
+  toolbar: [
+    [{ header: [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ list: 'ordered' }, { list: 'bullet' }],
+    [{ indent: '-1' }, { indent: '+1' }],
+    ['link'],
+    ['clean'],
+  ],
+};
+
+const quillFormats = [
+  'header',
+  'bold', 'italic', 'underline', 'strike',
+  'list', 'bullet', 'indent',
+  'link',
+];
 
 interface AddPropertyModalProps {
   visible: boolean;
@@ -191,6 +217,10 @@ const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
     return Promise.resolve();
   };
 
+  const handleEditorChange = (content: any) => {
+    form.setFieldsValue({ description: content });
+  };
+
   return (
     <Modal
       title={isEditing ? "Edit Property" : "Add New Property"}
@@ -198,6 +228,7 @@ const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
       onCancel={onCancel}
       footer={null}
       destroyOnClose
+      width={800} // Increased width for better editor experience
     >
       <Form
         form={form}
@@ -217,8 +248,29 @@ const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
           </Col>
         </Row>
 
-        <Form.Item name="description" label="Description" rules={[{ required: true, message: 'Please enter a description' }]}>
-          <Input.TextArea rows={4} />
+        <Form.Item 
+          name="description" 
+          label="Description" 
+          rules={[{ 
+            required: true, 
+            message: 'Please enter a description',
+            validator: (_, value) => {
+              // Check if the Quill content is empty or just contains empty tags
+              const justHtml = value.replace(/<(.|\n)*?>/g, '').trim();
+              if (!justHtml) {
+                return Promise.reject('Please enter a description');
+              }
+              return Promise.resolve();
+            }
+          }]}
+        >
+          <ReactQuill 
+            theme="snow"
+            modules={quillModules}
+            formats={quillFormats}
+            style={{ height: 200, marginBottom: 50 }} // Add extra margin to accommodate the toolbar
+            onChange={handleEditorChange}
+          />
         </Form.Item>
 
         <Row gutter={16}>
