@@ -1,6 +1,6 @@
 import { connectToDatabase } from "@/lib/database";
-import Message from "@/models/Message"; // Assuming you have a Message model
-import User from "@/models/User"; // Import User model
+import Message from "@/models/Message";
+import User from "@/models/User"; 
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -8,27 +8,24 @@ export async function POST(req: NextRequest) {
         await connectToDatabase();
         const { senderId, receiverId, content, propertyId } = await req.json();
 
-        // Check sender's role
         const sender = await User.findById(senderId);
         if (!sender) {
             return NextResponse.json({ message: "Sender not found" }, { status: 404 });
         }
 
-        if (sender.role !== 'USER') {
-            return NextResponse.json({ message: "Only users can send messages first." }, { status: 403 });
-        }
+        // if (sender.role !== 'USER') {
+        //     return NextResponse.json({ message: "Only users can send messages first." }, { status: 403 });
+        // }
 
-        // Check receiver's role
         const receiver = await User.findById(receiverId);
         if (!receiver) {
             return NextResponse.json({ message: "Receiver not found" }, { status: 404 });
         }
 
-        if (receiver.role !== 'SELLER') {
-            return NextResponse.json({ message: "Receiver must be a seller." }, { status: 403 });
-        }
+        // if (receiver.role !== 'SELLER') {
+        //     return NextResponse.json({ message: "Receiver must be a seller." }, { status: 403 });
+        // }
 
-        // Create a new message
         const newMessage = new Message({
             senderId,
             receiverId,
@@ -51,11 +48,17 @@ export async function POST(req: NextRequest) {
     }
 }
 
-// You can also implement a GET method to fetch messages if needed
 export async function GET(req: NextRequest) {
     try {
         await connectToDatabase();
-        const { senderId, receiverId } = await req.json();
+        const { searchParams } = new URL(req.url);
+
+        const senderId = searchParams.get("senderId");
+        const receiverId = searchParams.get("receiverId");
+
+        if (!senderId || !receiverId) {
+            return NextResponse.json({ message: "Missing senderId or receiverId" }, { status: 400 });
+        }
 
         const messages = await Message.find({
             $or: [
