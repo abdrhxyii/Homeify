@@ -40,3 +40,24 @@ export interface Property {
     images: File[];
   }
   
+export interface Seller {
+  id: string;
+  email: string;
+  name: string;
+  phoneNumber: string;
+}
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+}
+
+export interface Message {
+  _id: string;
+  senderId: string;
+  receiverId: string;
+  content: string;
+  timestamp: string;
+  propertyId?: string;
+}

@@ -115,6 +115,17 @@ export default function Navbar() {
               Dashboard
             </Link>
           )}
+          {isAuthenticated && role === 'USER' && (
+            <Link
+              href="/chat"
+              className={`text-white hover:text-secondary ${
+                activeItem === 'chat' ? 'text-secondary font-bold' : ''
+              }`}
+              onClick={() => handleItemClick('chat')}
+            >
+              Chat
+            </Link>
+          )}
         </div>
 
         {/* Desktop Auth Buttons */}
@@ -221,6 +232,17 @@ export default function Navbar() {
             >
               Manage Rental
             </Link>
+            {isAuthenticated && role === 'USER' && (
+              <Link
+                href="/chat"
+                className={`py-2 border-b border-black ${
+                  activeItem === 'chat' ? 'text-secondary font-bold' : ''
+                }`}
+                onClick={() => handleItemClick('chat')}
+              >
+                Chat
+              </Link>
+            )}
 
             <div className="flex flex-col space-y-4 mt-4">
               {isAuthenticated ? (

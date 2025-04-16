@@ -1,21 +1,47 @@
-'use client'
+'use client';
 import Image from 'next/image';
-import { Mail, Phone, MessageCircle, Check, Images } from 'lucide-react';
-import { useState } from 'react';
+import { Mail, Phone, MessageCircle, Check, Images, MessageSquare } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Breadcrumb } from 'antd';
+import SanitizedHTML from '@/components/SanitizedHTML';
+import axios from 'axios';
+import { Property, Seller } from '@/types/interfaces';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import ChatModal from '@/components/ChatModal';
 
-export default function PropertyDetails() {
+export default function PropertyDetails({ params }: { params: { id: string } }) {
+  const [property, setProperty] = useState<Property | null>(null);
+  const [seller, setSeller] = useState<Seller | null>(null);
   const [isViewerOpen, setIsViewerOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [chatModalVisible, setChatModalVisible] = useState(false);
+  const propertyId = params.id;
+  const router = useRouter();
 
-  const images = [
-    '/item1.webp',
-    '/item1.webp',
-    '/item1.webp',
-    '/item1.webp',
-    '/item1.webp'
-  ];
+  useEffect(() => {
+    const fetchProperty = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/api/property/${propertyId}`);
+        setProperty(response.data.property);
+        setSeller(response.data.seller);
+        setLoading(false);
+      } catch (err: any) {
+        setError(err.response?.data?.message || 'Failed to load property details');
+        setLoading(false);
+      }
+    };
 
-  const openImageViewer = (index: any) => {
+    fetchProperty();
+  }, [propertyId]);
+
+  // Image handling
+  const images = property?.images || ['/item1.webp']; // Fallback to placeholder if no images
+
+  const openImageViewer = (index: number) => {
     setCurrentImageIndex(index);
     setIsViewerOpen(true);
   };
@@ -32,35 +58,107 @@ export default function PropertyDetails() {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
 
+  // Contact functionality
+  const handleEmailContact = () => {
+    if (seller && seller.email) {
+      const subject = `Inquiry about: ${property?.title}`;
+      const body = `Hi ${seller.name},\n\nI'm interested in your property: ${property?.title} at ${property?.location}.\n\nPlease contact me with more information.\n\nThank you!`;
+      window.location.href = `mailto:${seller.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    } else {
+      alert('Seller email is not available');
+    }
+  };
+
+  const handlePhoneContact = () => {
+    if (seller && seller.phoneNumber) {
+      window.location.href = `tel:${seller.phoneNumber}`;
+    } else {
+      alert('Seller phone number is not available');
+    }
+  };
+
+  const handleWhatsAppContact = () => {
+    if (seller && seller.phoneNumber) {
+      // Clean the phone number - remove spaces, dashes, etc.
+      const cleanPhoneNumber = seller.phoneNumber.replace(/\D/g, '');
+      const message = `Hi ${seller.name}, I'm interested in your property: ${property?.title} at ${property?.location}.`;
+      window.open(`https://wa.me/${cleanPhoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+    } else {
+      alert('Seller phone number is not available');
+    }
+  };
+
+  const handleChatContact = () => {
+    if (seller && seller.id) {
+      // Navigate to chat page with seller ID
+      router.push(`/chat/${seller.id}?propertyId=${propertyId}`);
+    } else {
+      alert('Cannot initiate chat at this time');
+    }
+  };
+
+  if (loading) {
+    return <div className="max-w-7xl mx-auto px-4 py-8 mt-20">Loading...</div>;
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8 mt-20 text-red-500">
+        Error: {error}
+      </div>
+    );
+  }
+
+  if (!property || !seller) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-8 mt-20">
+        Property or seller information not found.
+      </div>
+    );
+  }
+
   return (
+    <>
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-20">
+      <Breadcrumb className='mb-5'>
+        <Breadcrumb.Item>
+          <Link href="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>
+          <Link href="/properties">Properties</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>{property.title}</Breadcrumb.Item>
+      </Breadcrumb>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         <div className="md:col-span-2 relative h-96">
           <div className="absolute top-4 left-4 bg-white rounded-full px-3 py-1 z-10 flex items-center gap-1">
-            <Images size={20}/>
+            <Images size={20} />
             <span>{images.length}</span>
           </div>
-          <Image 
-            src={images[0]} 
-            alt="Villa with pool and lake view" 
-            layout="fill" 
-            objectFit="cover" 
+          <Image
+            src={images[0]}
+            alt={property.title}
+            layout="fill"
+            objectFit="cover"
             className="rounded-lg cursor-pointer"
             onClick={() => openImageViewer(0)}
           />
         </div>
         <div className="grid grid-cols-2 gap-4">
           {[1, 2, 3, 4].map((index) => (
-            <div key={index} className="relative h-44">
-              <Image 
-                src={images[index]} 
-                alt={`Villa image ${index + 1}`} 
-                layout="fill" 
-                objectFit="cover" 
-                className="rounded-lg cursor-pointer"
-                onClick={() => openImageViewer(index)}
-              />
-            </div>
+            images[index] && (
+              <div key={index} className="relative h-44">
+                <Image
+                  src={images[index]}
+                  alt={`${property.title} image ${index + 1}`}
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-lg cursor-pointer"
+                  onClick={() => openImageViewer(index)}
+                />
+              </div>
+            )
           ))}
         </div>
       </div>
@@ -69,19 +167,19 @@ export default function PropertyDetails() {
       {isViewerOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex items-center justify-center">
           <div className="relative max-w-4xl w-full">
-            <button 
+            <button
               className="absolute top-4 right-4 text-white text-2xl"
               onClick={closeImageViewer}
             >
               ×
             </button>
-            <button 
+            <button
               className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white text-3xl"
               onClick={prevImage}
             >
               ←
             </button>
-            <button 
+            <button
               className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white text-3xl"
               onClick={nextImage}
             >
@@ -89,7 +187,7 @@ export default function PropertyDetails() {
             </button>
             <Image
               src={images[currentImageIndex]}
-              alt={`Villa image ${currentImageIndex + 1}`}
+              alt={`${property.title} image ${currentImageIndex + 1}`}
               width={1200}
               height={800}
               objectFit="contain"
@@ -104,21 +202,37 @@ export default function PropertyDetails() {
 
       <div className="flex flex-col md:flex-row justify-between items-start mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">6200 Sqft | 5 Bed | Extended and Upgraded</h1>
-          <p className="text-lg text-gray-700">5 Bedroom Villa For Sale in Jumeirah Islands, Jumeirah Islands.</p>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">{property.title}</h1>
+          <p className="text-lg text-gray-700">{property.location}</p>
         </div>
-        <div className="flex mt-4 md:mt-0 space-x-2">
-          <button className="bg-primary text-white px-6 py-3 rounded flex items-center">
+        <div className="flex flex-wrap mt-4 md:mt-0 gap-2">
+          <button 
+            className="bg-primary text-white px-4 py-3 rounded flex items-center"
+            onClick={handleEmailContact}
+          >
             <Mail className="mr-2" size={20} />
             EMAIL
           </button>
-          <button className="border border-gray-300 text-gray-700 px-6 py-3 rounded flex items-center">
+          <button 
+            className="border border-gray-300 text-gray-700 px-4 py-3 rounded flex items-center"
+            onClick={handlePhoneContact}
+          >
             <Phone className="mr-2" size={20} />
             CALL
           </button>
-          <button className="border border-gray-300 text-gray-700 px-6 py-3 rounded flex items-center">
+          <button 
+            className="border border-gray-300 text-gray-700 px-4 py-3 rounded flex items-center"
+            onClick={handleWhatsAppContact}
+          >
             <MessageCircle className="mr-2" size={20} color="green" />
             WHATSAPP
+          </button>
+          <button 
+            className="border border-gray-300 bg-blue-50 text-blue-700 px-4 py-3 rounded flex items-center"
+            onClick={() => setChatModalVisible(true)}
+          >
+            <MessageSquare className="mr-2" size={20} color="blue" />
+            CHAT
           </button>
         </div>
       </div>
@@ -127,35 +241,39 @@ export default function PropertyDetails() {
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
         <div className="border-b md:border-b-0 md:border-r border-gray-200 pb-4 md:pb-0">
           <h3 className="text-gray-500 mb-1">Price:</h3>
-          <p className="text-red-500 text-xl font-semibold">AED25,750,000</p>
+          <p className="text-red-500 text-xl font-semibold">
+            {property.listingType === 'rental'
+              ? `$${property.price}/mo`
+              : `$${property.price.toLocaleString()}`}
+          </p>
         </div>
         <div className="border-b md:border-b-0 md:border-r border-gray-200 pb-4 md:pb-0">
           <h3 className="text-gray-500 mb-1">Location:</h3>
-          <p className="text-gray-800 text-xl">Jumeirah Islands</p>
+          <p className="text-gray-800 text-xl">{property.location}</p>
         </div>
         <div className="border-b md:border-b-0 md:border-r border-gray-200 pb-4 md:pb-0">
           <h3 className="text-gray-500 mb-1">Bedrooms:</h3>
-          <p className="text-gray-800 text-xl">5</p>
+          <p className="text-gray-800 text-xl">{property.bedrooms}</p>
         </div>
         <div>
           <h3 className="text-gray-500 mb-1">Size:</h3>
-          <p className="text-gray-800 text-xl">6200sqft</p>
+          <p className="text-gray-800 text-xl">{property.area} sqft</p>
         </div>
       </div>
 
       <div className="flex items-center mb-8">
         <div className="relative w-12 h-12 mr-4">
-          <Image 
-            src="/item1.webp" 
-            alt="Agent" 
-            layout="fill" 
-            objectFit="cover" 
+          <Image
+            src="/profile2.jpg" // Replace with actual seller avatar if available
+            alt={seller.name}
+            layout="fill"
+            objectFit="cover"
             className="rounded-full"
           />
         </div>
         <div>
-          <p className="text-lg font-medium">Roberto Perez Lorenzo</p>
-          <p className="text-gray-600">+97155333372</p>
+          <p className="text-lg font-medium">{seller.name}</p>
+          <p className="text-gray-600">{seller.phoneNumber}</p>
         </div>
       </div>
 
@@ -174,7 +292,7 @@ export default function PropertyDetails() {
             'Covered Parking',
             'Private Garden',
             'Private Pool',
-            'View of Water'
+            'View of Water',
           ].map((feature, index) => (
             <div key={index} className="flex items-center">
               <Check size={18} className="text-gray-400 mr-2" />
@@ -183,19 +301,10 @@ export default function PropertyDetails() {
           ))}
         </div>
         <div className="md:col-span-2">
-          <p className="text-gray-700 leading-relaxed">
-            This fantastic fully extended and upgraded Costa Del Sol style villa is in Jumeirah Islands and
-            now benefits of having a BUA of 6,200 Sq Ft, and benefits from 5 good size bedrooms all with
-            en-suite bathrooms. On the ground floor, there is 3 separate living rooms, an open plan kitchen
-            and an industrial back kitchen. The main reception boasts a beautiful double height ceiling
-            which gives the villa a great sense on light and space with beautiful views of the lake. Outside,
-            boosts a large plot of 10,775 Sq Ft with a private swimming pool. The property has a stunning
-            lake view to the rear and is very private and peaceful, vacant and viewings are exclusively by
-            appointment only.
-          </p>
+          <SanitizedHTML html={property.description} />
           <div className="mt-6">
-            <p className="text-gray-700">-Entertainment Foyer</p>
-            <p className="text-gray-700">-5 Bedrooms</p>
+            <p className="text-gray-700">{property.propertyType}</p>
+            <p className="text-gray-700">{property.bedrooms} Bedrooms</p>
           </div>
         </div>
       </div>
@@ -203,16 +312,7 @@ export default function PropertyDetails() {
       {/* Amenities */}
       <h2 className="text-2xl font-bold mt-12 mb-6">Amenities</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4">
-        {[
-          'Community Swimming Pool',
-          'Basketball court',
-          'Restaurants',
-          'Gymnasium',
-          'Childrens area',
-          'Golf club',
-          'Tennis court',
-          'Supermarkets'
-        ].map((amenity, index) => (
+        {property.amenities.map((amenity, index) => (
           <div key={index} className="flex items-center">
             <div className="h-4 w-4 bg-gray-200 rounded-full mr-3"></div>
             <span className="text-gray-700">{amenity}</span>
@@ -220,5 +320,12 @@ export default function PropertyDetails() {
         ))}
       </div>
     </div>
+      <ChatModal
+        visible={chatModalVisible}
+        onClose={() => setChatModalVisible(false)}
+        receiverId={seller.id}
+        propertyId={propertyId}
+      />
+    </>
   );
 }

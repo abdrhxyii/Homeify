@@ -6,6 +6,7 @@ import { Property } from '@/types/interfaces';
 
 export default function HomePropertySection() {
   const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchProperties = async () => {
@@ -14,6 +15,8 @@ export default function HomePropertySection() {
         setProperties(response.data.properties);
       } catch (error) {
         console.error('Error fetching properties:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -23,11 +26,15 @@ export default function HomePropertySection() {
   return (
     <section className="px-4 py-8 md:px-8">
       <h2 className="text-2xl text-black font-semibold mb-6 text-start">Featured Properties For You</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {properties.map((property) => (
-          <PropertyCard key={property._id} {...property} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="text-center text-lg text-gray-500">Loading...</div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          {properties.map((property) => (
+            <PropertyCard key={property._id} {...property} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
