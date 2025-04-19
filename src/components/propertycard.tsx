@@ -2,13 +2,27 @@
 
 import Image from 'next/image';
 import { MapPin, Bed, Wifi, Heart } from 'lucide-react';
-import Link from 'next/link';
 import { Property } from '@/types/interfaces';
+import { useRouter } from 'next/navigation';
+import { showErrorNotification } from '@/lib/notificationUtil';
+import axios from 'axios';
 
 const PropertyCard = ({ _id, title, price, location, bedrooms, amenities, images }: Property) => {
+  const router = useRouter();
+
+  const handleClick = async () => {
+    try {
+      await axios.post('/api/property/track-click', { propertyId: _id });
+      router.push(`/property/${_id}`);
+    } catch (error) {
+      showErrorNotification('Failed to record property click');
+      router.push(`/property/${_id}`);
+    }
+  };
+
   return (
-    <Link href={`/property/${_id}`} className="cursor-pointer">
-      <div className="border rounded-3xl border-gray-200 overflow-hidden w-full sm:max-w-sm mx-auto">
+    <>
+      <div className="border rounded-3xl border-gray-200 overflow-hidden w-full sm:max-w-sm mx-auto cursor-pointer" onClick={handleClick}>
         <div className="relative w-full h-48 sm:h-56">
           <Image
             src={images[0] || '/property.webp'}
@@ -52,7 +66,7 @@ const PropertyCard = ({ _id, title, price, location, bedrooms, amenities, images
           </div>
         </div>
       </div>
-    </Link>
+    </>
   );
 };
 

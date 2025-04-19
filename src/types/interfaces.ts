@@ -34,6 +34,7 @@ export interface Property {
     images: string[];
     listingType: string;
     sellerId: string;
+    createdAt: string;
 }
   
   export interface PropertyFormData extends Omit<Property, 'images'> {

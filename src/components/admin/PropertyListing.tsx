@@ -4,6 +4,8 @@ import axios from 'axios';
 import AddPropertyModal from '../AddPropertyModal';
 import type { Property } from '@/types/interfaces';
 import { useAuthStore } from '@/store/useAuthStore';
+import { showErrorNotification } from "@/lib/notificationUtil";
+import { Info } from 'lucide-react';
 
 const PropertyListing: React.FC = () => {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -11,12 +13,44 @@ const PropertyListing: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentProperty, setCurrentProperty] = useState<Property | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const { currentLoggedInUserId } = useAuthStore()
+  const [subscription, setSubscription] = useState<any>(null);
+  const [isSubscriptionLoading, setIsSubscriptionLoading] = useState(true);
+  const { currentLoggedInUserId } = useAuthStore();
+
+  // Define plan limits
+  const planLimits: { [key: string]: number } = {
+    Basic: 5,
+    Pro: 15,
+    Premium: Infinity // Unlimited for Premium
+  };
+
+  // Fetch subscription status
+  const fetchSubscription = async () => {
+    if (!currentLoggedInUserId) {
+      setIsSubscriptionLoading(false);
+      return;
+    }
+
+    try {
+      const response = await axios.get(`/api/subscription/check?userId=${currentLoggedInUserId}`);
+      if (response.data.hasActiveSubscription) {
+        setSubscription(response.data.subscription);
+      } else {
+        // Default to Basic plan if no active subscription
+        setSubscription({ plan: 'Basic' });
+      }
+    } catch (error) {
+      console.error("Error fetching subscription:", error);
+      setSubscription({ plan: 'Basic' }); // Fallback to Basic on error
+    } finally {
+      setIsSubscriptionLoading(false);
+    }
+  };
 
   const fetchProperties = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('/api/property');
+      const response = await axios.get(`/api/property/seller?sellerId=${currentLoggedInUserId}`);
       setProperties(response.data.properties);
     } catch (error) {
       message.error('Failed to fetch properties');
@@ -26,8 +60,9 @@ const PropertyListing: React.FC = () => {
   };
 
   useEffect(() => {
+    fetchSubscription();
     fetchProperties();
-  }, []);
+  }, [currentLoggedInUserId]);
 
   const handleDelete = async (id: string) => {
     try {
@@ -39,6 +74,24 @@ const PropertyListing: React.FC = () => {
     }
   };
 
+  const renderCurrentPlanBanner = () => {
+    if (!subscription) return null;
+
+    return (
+      <div className="w-full bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-md flex items-center">
+        <Info className="text-blue-500 mr-2" size={20} />
+        <div>
+          <p className="font-medium">
+            You currently have an active <span className="font-bold">{subscription.plan}</span> subscription
+          </p>
+          <p className="text-sm text-gray-600">
+            Valid until: {new Date(subscription.expiresAt).toLocaleDateString()}
+          </p>
+        </div>
+      </div>
+    );
+  };
+
   const handleEdit = (record: Property) => {
     setCurrentProperty(record);
     setIsEditing(true);
@@ -46,6 +99,18 @@ const PropertyListing: React.FC = () => {
   };
 
   const handleAddNew = () => {
+    // Check subscription and listing limits
+    const currentPlan = subscription?.plan || 'Basic';
+    const listingLimit = planLimits[currentPlan];
+    const currentListings = properties.length;
+
+    if (currentListings >= listingLimit) {
+      showErrorNotification(
+        `You have reached the maximum property listing limit for your ${currentPlan} plan (${listingLimit} properties). Please upgrade your plan to add more properties.`
+      );
+      return;
+    }
+
     setCurrentProperty(null);
     setIsEditing(false);
     setModalVisible(true);
@@ -121,22 +186,32 @@ const PropertyListing: React.FC = () => {
     },
   ];
 
+  const currentPlan = subscription?.plan || 'Basic';
+  const listingLimit = planLimits[currentPlan];
+  const isAddDisabled = properties.length >= listingLimit;
+
   return (
     <div>
-      <Button
-        type="primary"
-        onClick={handleAddNew}
-        style={{ marginBottom: 16 }}
-      >
-        Add Property
-      </Button>
+      {renderCurrentPlanBanner()}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+        <Button
+          type="primary"
+          onClick={handleAddNew}
+          disabled={isSubscriptionLoading || isAddDisabled}
+        >
+          Add Property
+        </Button>
+        <span style={{ marginLeft: '16px' }}>
+          Listings: {properties.length}
+        </span>
+      </div>
 
       <div style={{ overflow: 'auto', maxHeight: '600px' }}>
         <Table
           columns={columns}
           dataSource={properties}
           rowKey="_id"
-          loading={loading}
+          loading={loading || isSubscriptionLoading}
           scroll={{ x: 400 }}
           sticky
         />

@@ -3,6 +3,7 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from 'jsonwebtoken';
+import Subscription from "@/models/Subscription";
 
 const JWT_SECRET = 'whatthehelloisadeepseek'
 
@@ -29,6 +30,16 @@ export async function POST(req: NextRequest) {
     });
 
     await newUser.save();
+
+    if (newUser.role === "SELLER") {
+      const subscription = new Subscription({
+        userId: newUser._id,
+        plan: "Basic",
+        status: "active",
+        expiresAt: new Date("9999-12-31") 
+      });
+      await subscription.save();
+    }
 
     const token = jwt.sign({ id: newUser._id, email: newUser.email, role: newUser.role }, JWT_SECRET, {
       expiresIn: "1h",

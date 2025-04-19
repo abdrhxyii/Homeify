@@ -13,6 +13,7 @@ interface IProperty extends Document {
   images: string[];
   listingType: string;
   sellerId: mongoose.Schema.Types.ObjectId; // Foreign key for the user (seller)
+  clickCount: number; 
   createdAt: Date;
   updatedAt: Date;
 }
@@ -25,12 +26,6 @@ const propertySchema: Schema = new Schema(
     location: { type: String, required: true },
     propertyType: {
       type: String,
-      enum: [
-        'apartment', 'house', 'condo', 'land', 'studio', 'villa', 'townhouse', 
-        'penthouse', 'duplex', 'bungalow', 'cottage', 'mansion', 'farmhouse', 
-        'chalet', 'loft', 'mobile home', 'co-op', 'commercial', 'industrial', 
-        'mixed-use', 'ranch'
-      ],
       required: true,
     },
     bedrooms: { type: Number, required: true },
@@ -47,6 +42,10 @@ const propertySchema: Schema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true,
+    },
+    clickCount: { 
+      type: Number, 
+      default: 0,
     },
   },
   {
