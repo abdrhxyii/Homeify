@@ -4,7 +4,7 @@ export interface IPayment extends Document {
   userId: mongoose.Types.ObjectId; 
   paymentStatus: string; 
   paymentMethod: string;
-  subscriptionId: mongoose.Types.ObjectId; 
+  subscriptionId: string; 
   amount: number;
 }
 
@@ -26,7 +26,7 @@ const paymentSchema: Schema = new Schema(
       required: true 
     },
     subscriptionId: { 
-      type: mongoose.Schema.Types.ObjectId, 
+      type: String, 
       ref: 'Subscription', 
       required: true 
     },

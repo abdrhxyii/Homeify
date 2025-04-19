@@ -3,6 +3,7 @@ import { Table, Button, message, Popconfirm, Space } from 'antd';
 import axios from 'axios';
 import AddPropertyModal from '../AddPropertyModal';
 import type { Property } from '@/types/interfaces';
+import { useAuthStore } from '@/store/useAuthStore';
 
 const PropertyListing: React.FC = () => {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -10,6 +11,7 @@ const PropertyListing: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentProperty, setCurrentProperty] = useState<Property | null>(null);
   const [isEditing, setIsEditing] = useState(false);
+  const { currentLoggedInUserId } = useAuthStore()
 
   const fetchProperties = async () => {
     setLoading(true);
