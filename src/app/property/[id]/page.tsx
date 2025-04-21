@@ -63,12 +63,17 @@ export default function PropertyDetails({ params }: { params: { id: string } }) 
     if (seller && seller.email) {
       const subject = `Inquiry about: ${property?.title}`;
       const body = `Hi ${seller.name},\n\nI'm interested in your property: ${property?.title} at ${property?.location}.\n\nPlease contact me with more information.\n\nThank you!`;
-      window.location.href = `mailto:${seller.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+      const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+        seller.email
+      )}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  
+      window.open(gmailUrl, '_blank');
     } else {
       alert('Seller email is not available');
     }
   };
-
+  
   const handlePhoneContact = () => {
     if (seller && seller.phoneNumber) {
       window.location.href = `tel:${seller.phoneNumber}`;

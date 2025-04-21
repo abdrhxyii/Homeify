@@ -101,9 +101,9 @@ export default function Page() {
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-primary">
+                  <Link href="/forgot-password" className="font-semibold text-primary">
                     Forgot password?
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="mt-2">
