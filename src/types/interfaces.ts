@@ -1,4 +1,5 @@
 import { FormInstance } from 'antd'; // Import FormInstance from antd
+import { ReactElement } from 'react';
 
 export interface PropertyData {
     key: number;
@@ -62,3 +63,53 @@ export interface Message {
   timestamp: string;
   propertyId?: string;
 }
+
+export interface AddPropertyModalProps {
+  visible: boolean;
+  onCancel: () => void;
+  onSuccess: () => void;
+  isEditing?: boolean;
+  property?: Property | null;
+}
+
+export interface CardData {
+  title: string;
+  count: string | number;
+  icon: ReactElement;
+  color: string;
+  iconColor: string;
+}
+
+export interface UserData {
+  key: string;
+  _id: string;
+  name: string;
+  email: string;
+  paymentStatus?: 'Paid' | 'Free';
+  role: string;
+  createdAt?: string;
+}
+
+export interface DashboardStats {
+  totalUsers: number;
+  paidUsers: number;
+  totalProperties: number;
+  bestLister: {
+    name: string;
+    email: string;
+    propertyCount: number;
+  };
+  subscriptionDistribution: {
+    Basic: number;
+    Pro: number;
+    Premium: number;
+  };
+  totalRevenue: number;
+}
+
+export interface UserGrowthData {
+  date: string;
+  count: number;
+}
+
+export type PeriodType = 'daily' | 'weekly' | 'monthly';

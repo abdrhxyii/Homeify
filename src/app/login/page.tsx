@@ -47,7 +47,7 @@ export default function Page() {
 
       checkAuthStatus();
 
-      console.log("User Role:", data.user.role); // Debugging line
+      showSuccessNotification(`Welcome ${data.user.name}`);
 
       if(data.user.role === "ADMIN") {
         route.push('/dashboard')
@@ -56,9 +56,6 @@ export default function Page() {
       } else if (data.user.role === "USER") {
         route.push('/')
       }
-
-      showSuccessNotification(`Welcome ${data.user.name}`);
-      console.log("Login Success:", data);
     } catch (error: any) {
       console.error("Login Error:", error.response?.data?.message || error.message);
       setError(error.response?.data?.message || "Something went wrong.");

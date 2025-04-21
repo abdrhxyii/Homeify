@@ -6,8 +6,10 @@ import axios from "axios";
 import { setCookie } from "nookies";
 import { useAuthStore } from "@/store/useAuthStore";
 import { showSuccessNotification, showErrorNotification } from "@/lib/notificationUtil"; // Import the notification utility
+import { useRouter } from "next/navigation";
 
 export default function SellerRegister() {
+  const router = useRouter()
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -48,6 +50,7 @@ export default function SellerRegister() {
 
         checkAuthStatus(); // Call auth check after successful login
         showSuccessNotification("Account created successfully!"); // Use the success notification
+        router.push('/'); 
       }
     } catch (error: any) {
       setError(error.response?.data?.message || "Registration failed. Please try again.");

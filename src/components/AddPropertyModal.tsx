@@ -40,6 +40,16 @@ interface AddPropertyModalProps {
   property?: Property | null;
 }
 
+// Add Google Maps API script
+const loadScript = (src: string) => {
+  return new Promise((resolve) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = () => resolve(true);
+    document.body.appendChild(script);
+  });
+};
+
 const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
   visible,
   onCancel,
@@ -92,6 +102,24 @@ const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
       }
     }
   }, [visible, property, isEditing, form]);
+
+  useEffect(() => {
+    const initAutocomplete = async () => {
+      await loadScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places`);
+      const input = document.getElementById('location-input') as HTMLInputElement;
+      const autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (place && place.formatted_address) {
+          form.setFieldsValue({ location: place.formatted_address });
+        }
+      });
+    };
+
+    if (visible) {
+      initAutocomplete();
+    }
+  }, [visible]);
 
   const handleSubmit = async (values: Omit<PropertyFormData, 'images' | 'sellerId'>) => {
     setSubmitting(true);
@@ -276,7 +304,7 @@ const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
         <Row gutter={16}>
           <Col span={12}>
             <Form.Item name="location" label="Location" rules={[{ required: true, message: 'Please enter a location' }]}>
-              <Input />
+              <Input id="location-input" />
             </Form.Item>
           </Col>
           <Col span={12}>

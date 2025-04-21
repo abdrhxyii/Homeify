@@ -8,11 +8,14 @@ import SubscriptionPlans from "@/components/admin/Subscription";
 import Membership from "@/components/admin/Membership";
 import ChatUI from "@/components/admin/ChatUI";
 import { Tooltip } from "antd";
+import { useAuthStore } from "@/store/useAuthStore";
+import ManageSubscriptions from "@/components/admin/ManageSubscription";
 
 export default function AdminDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeItem, setActiveItem] = useState<string>("Dashboard");
   const [isButtonPulsing, setIsButtonPulsing] = useState(false);
+  const { role } = useAuthStore();
 
   // Animation effect for the membership button
   useEffect(() => {
@@ -38,6 +41,10 @@ export default function AdminDashboard() {
         return <ChatUI />;
       case "Membership":
         return <Membership />;
+      case "Manage Subscriptions":
+        return <ManageSubscriptions />;
+      default:
+        return <Dashboard />;
     }
   };
 
@@ -77,17 +84,19 @@ export default function AdminDashboard() {
               />
             </div>
           </Tooltip>
-          <Tooltip title={isSidebarOpen ? "" : "Membership"} placement="right">
-            <div>
-              <SidebarItem
-                icon={<FileText size={20} />}
-                text="Membership"
-                isOpen={isSidebarOpen}
-                onClick={() => setActiveItem("Membership")}
-                isActive={activeItem === "Membership"}
-              />
-            </div>
-          </Tooltip>
+          {role !== "ADMIN" && (
+            <Tooltip title={isSidebarOpen ? "" : "Membership"} placement="right">
+              <div>
+                <SidebarItem
+                  icon={<FileText size={20} />}
+                  text="Membership"
+                  isOpen={isSidebarOpen}
+                  onClick={() => setActiveItem("Membership")}
+                  isActive={activeItem === "Membership"}
+                />
+              </div>
+            </Tooltip>
+          )}
           <Tooltip title={isSidebarOpen ? "" : "Chat"} placement="right">
             <div>
               <SidebarItem
@@ -99,6 +108,19 @@ export default function AdminDashboard() {
               />
             </div>
           </Tooltip>
+          {role === "ADMIN" && (
+            <Tooltip title={isSidebarOpen ? "" : "Manage Subscriptions"} placement="right">
+              <div>
+                <SidebarItem
+                  icon={<Users size={20} />}
+                  text="Manage Subscriptions"
+                  isOpen={isSidebarOpen}
+                  onClick={() => setActiveItem("Manage Subscriptions")}
+                  isActive={activeItem === "Manage Subscriptions"}
+                />
+              </div>
+            </Tooltip>
+          )}
         </nav>
 
         {/* Membership Button at the bottom */}

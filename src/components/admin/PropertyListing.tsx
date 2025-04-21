@@ -6,6 +6,8 @@ import type { Property } from '@/types/interfaces';
 import { useAuthStore } from '@/store/useAuthStore';
 import { showErrorNotification } from "@/lib/notificationUtil";
 import { Info } from 'lucide-react';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import Link from 'next/link';
 
 const PropertyListing: React.FC = () => {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -75,17 +77,25 @@ const PropertyListing: React.FC = () => {
   };
 
   const renderCurrentPlanBanner = () => {
-    if (!subscription) return null;
+    if (!subscription || isSubscriptionLoading) return null;
+
+    const currentPlan = subscription.plan || 'Basic';
+    const listingLimit = planLimits[currentPlan];
+    const limitText = listingLimit === Infinity ? 'unlimited' : listingLimit;
 
     return (
       <div className="w-full bg-blue-50 border-l-4 border-blue-500 p-4 mb-8 rounded-md flex items-center">
         <Info className="text-blue-500 mr-2" size={20} />
         <div>
           <p className="font-medium">
-            You currently have an active <span className="font-bold">{subscription.plan}</span> subscription
+            You are on the <span className="font-bold">{currentPlan}</span> plan
           </p>
           <p className="text-sm text-gray-600">
-            Valid until: {new Date(subscription.expiresAt).toLocaleDateString()}
+            You can list up to {limitText} {limitText === 'unlimited' ? 'properties' : 'properties'}.
+            To list more,{' '}
+            <span className="text-blue-500 hover:underline">
+              view membership section
+            </span>.
           </p>
         </div>
       </div>
@@ -122,7 +132,8 @@ const PropertyListing: React.FC = () => {
     setIsEditing(false);
   };
 
-  const columns = [
+  // Define base columns
+  const baseColumns = [
     {
       title: 'Title',
       dataIndex: 'title',
@@ -169,9 +180,11 @@ const PropertyListing: React.FC = () => {
       key: 'actions',
       render: (_: any, record: Property) => (
         <Space size="middle">
-          <Button type="primary" onClick={() => handleEdit(record)}>
-            Edit
-          </Button>
+          <Button
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() => handleEdit(record)}
+          />
           <Popconfirm
             title="Delete the property"
             description="Are you sure you want to delete this property?"
@@ -179,12 +192,25 @@ const PropertyListing: React.FC = () => {
             okText="Yes"
             cancelText="No"
           >
-            <Button danger>Delete</Button>
+            <Button type="text" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
       ),
-    },
+    }    
   ];
+
+  // Conditionally add clickCount column for Pro or Premium plans
+  const columns = subscription?.plan === 'Pro' || subscription?.plan === 'Premium'
+    ? [
+        ...baseColumns,
+        {
+          title: 'Clicks',
+          dataIndex: 'clickCount',
+          key: 'clickCount',
+          render: (clickCount: number) => clickCount.toLocaleString(),
+        },
+      ]
+    : baseColumns;
 
   const currentPlan = subscription?.plan || 'Basic';
   const listingLimit = planLimits[currentPlan];
