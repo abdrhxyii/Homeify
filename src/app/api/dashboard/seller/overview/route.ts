@@ -62,10 +62,16 @@ export async function GET(req: NextRequest) {
       analyticsData.popularListings = popularListings;
     }
 
-    // Add placeholder for future Premium-specific data
+    // Add Premium-specific data
     if (plan === "Premium") {
-      // Reserved for future Premium-specific metrics
-      analyticsData.premiumMetrics = {};
+      // Count rental and sale properties
+      const rentalProperties = await Property.countDocuments({ sellerId, listingType: "rental" });
+      const saleProperties = await Property.countDocuments({ sellerId, listingType: "sale" });
+
+      analyticsData.premiumMetrics = {
+        rentalProperties,
+        saleProperties,
+      };
     }
 
     return NextResponse.json(

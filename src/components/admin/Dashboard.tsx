@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useAuthStore } from '@/store/useAuthStore';
 import { message } from 'antd';
 import AdminDashboard from './AdminDashboard';
+import SellerDashboard from './SellerDashboard';
 
 const Dashboard: React.FC = () => {
   const { role } = useAuthStore();
@@ -29,6 +30,8 @@ const Dashboard: React.FC = () => {
     switch (role) {
       case 'ADMIN':
         return <AdminDashboard loading={loading} onError={handleError} />;
+      case 'SELLER':
+        return <SellerDashboard/>
     }
   };
 
